@@ -50,19 +50,78 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Quiz</h1>
-
-    <div class="question">
-      <p><strong>Pergunta 1:</strong> Exemplo de pergunta aqui.</p>
-      <div class="options">
-        <label><input type="radio" name="q1" value="1" /> Opção 1</label>
-        <label><input type="radio" name="q1" value="2" /> Opção 2</label>
-        <label><input type="radio" name="q1" value="3" /> Opção 3</label>
-      </div>
-    </div>
-
-    <button>Enviar</button>
+  <div class="container" id="quiz-container">
+    <h1>Perfis de Prazer</h1>
+    <div class="question" id="question-box"></div>
+    <div class="options" id="options-box"></div>
+    <button id="next-btn">Próxima</button>
   </div>
+
+<script>
+  const categories = {
+    hotwife: 0,
+    dom: 0,
+    sub: 0,
+    voyeur: 0,
+    pegging: 0,
+  };
+
+  const questions = [
+    { question: "Você prefere dominar ou ser dominado?", options: [ {text:"Dominar", cat:"dom"}, {text:"Ser dominado", cat:"sub"}, {text:"Depende do momento", cat:"dom"} ] },
+    { question: "Qual cenário te excita mais?", options: [ {text:"Traição consensual (Hotwife)", cat:"hotwife"}, {text:"Exibição/Voyeur", cat:"voyeur"}, {text:"Pegging", cat:"pegging"} ] },
+    { question: "Você curte mais agressividade ou romance?", options: [ {text:"Agressivo e selvagem", cat:"dom"}, {text:"Calmo e carinhoso", cat:"sub"}, {text:"Depende da vibe", cat:"hotwife"} ] },
+    { question: "Assistir seu parceiro(a) com outra pessoa...", options: [ {text:"Me deixa muito excitado", cat:"hotwife"}, {text:"Só se eu dominar a cena", cat:"dom"}, {text:"Não curto", cat:"sub"} ] },
+    { question: "Você se excita sabendo que estão te assistindo?", options: [ {text:"Sim, muito", cat:"voyeur"}, {text:"Depende do momento", cat:"hotwife"}, {text:"Não mesmo", cat:"sub"} ] },
+    { question: "Sobre sexo anal com inversão de papéis...", options: [ {text:"Pegging me excita pra caramba", cat:"pegging"}, {text:"Só se eu controlar", cat:"dom"}, {text:"Não curto", cat:"sub"} ] },
+    { question: "Você gosta de dar ordens na cama?", options: [ {text:"Sim!", cat:"dom"}, {text:"Só às vezes", cat:"hotwife"}, {text:"Prefiro receber", cat:"sub"} ] },
+    { question: "Fantasias com marido/esposa de amigo(a)?", options: [ {text:"Sim, muito", cat:"hotwife"}, {text:"Se tiver voyeurismo", cat:"voyeur"}, {text:"Não é pra mim", cat:"sub"} ] },
+    { question: "Quando vê pornô, o que te chama atenção?", options: [ {text:"Dominação e controle", cat:"dom"}, {text:"Casais exibicionistas", cat:"voyeur"}, {text:"Fantasias hotwife", cat:"hotwife"} ] },
+    { question: "Qual papel te deixa mais excitado?", options: [ {text:"O que controla a situação", cat:"dom"}, {text:"O que recebe tudo", cat:"sub"}, {text:"O que participa com terceiros", cat:"hotwife"} ] },
+  ];
+
+  let current = 0;
+
+  function loadQuestion() {
+    const q = questions[current];
+    document.getElementById("question-box").innerHTML = `<p><strong>Pergunta ${current+1}:</strong> ${q.question}</p>`;
+    document.getElementById("options-box").innerHTML = q.options.map((o,i)=>
+      `<label><input type='radio' name='q${current}' value='${i}' /> ${o.text}</label>`
+    ).join("");
+  }
+
+  function showResults() {
+    let total = Object.values(categories).reduce((a,b)=>a+b,0) || 1;
+    let ranking = Object.entries(categories)
+      .map(([k,v])=>({cat:k,score:Math.round((v/total)*100)}))
+      .sort((a,b)=>b.score-a.score);
+
+    const translate = { hotwife:"Hotwife", dom:"Dominação", sub:"Submissão", voyeur:"Voyeur/Exibição", pegging:"Pegging" };
+
+    document.getElementById("quiz-container").innerHTML = `
+      <h2>Seu Ranking de Prazer</h2>
+      <ul>
+        ${ranking.map(r=>`<li>${translate[r.cat]} – <strong>${r.score}%</strong></li>`).join("")}
+      </ul>
+      <button onclick='location.reload()'>Refazer Quiz</button>
+    `;
+  }
+
+  document.getElementById("next-btn").addEventListener("click", () => {
+    const selected = document.querySelector("input[type='radio']:checked");
+    if (!selected) return alert("Selecione uma opção!");
+
+    const opt = questions[current].options[selected.value];
+    categories[opt.cat]++;
+
+    if (current < questions.length - 1) {
+      current++;
+      loadQuestion();
+    } else {
+      showResults();
+    }
+  });
+
+  loadQuestion();
+</script>
 </body>
 </html>
