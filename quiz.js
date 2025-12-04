@@ -1,5 +1,4 @@
 let perguntas = [
-  // 1 a 6 -> menu para você preencher depois
   { tipo: "menu", texto: "Pergunta 1", opcoes: ["", "", ""] },
   { tipo: "menu", texto: "Pergunta 2", opcoes: ["", "", ""] },
   { tipo: "menu", texto: "Pergunta 3", opcoes: ["", "", ""] },
@@ -7,7 +6,6 @@ let perguntas = [
   { tipo: "menu", texto: "Pergunta 5", opcoes: ["", "", ""] },
   { tipo: "menu", texto: "Pergunta 6", opcoes: ["", "", ""] },
 
-  // 7 a 11 -> checkbox
   { tipo: "checkbox", texto: "Pergunta 7", opcoes: ["", "", "", ""] },
   { tipo: "checkbox", texto: "Pergunta 8", opcoes: ["", "", "", ""] },
   { tipo: "checkbox", texto: "Pergunta 9", opcoes: ["", "", "", ""] },
@@ -15,7 +13,6 @@ let perguntas = [
   { tipo: "checkbox", texto: "Pergunta 11", opcoes: ["", "", "", ""] },
 ];
 
-// 12 a 29 -> menu com 4 opções fixas
 for (let i = 12; i <= 29; i++) {
   perguntas.push({
     tipo: "menu",
@@ -42,55 +39,49 @@ function mostrar() {
 
   if (q.tipo === "menu") {
     html = `
-      <select onchange="respostaMenu(this.value)">
+      <select id="sel">
         <option value="">Selecione...</option>
-        ${q.opcoes.map(o => `<option value="${o}">${o}</option>`).join("")}
+        ${q.opcoes.map(o => `<option>${o}</option>`).join("")}
       </select>
     `;
-  }
-
-  if (q.tipo === "checkbox") {
-    html = q.opcoes.map(o => `
-      <label><input type="checkbox" value="${o}"> ${o}</label>
-    `).join("");
+  } else {
+    html = q.opcoes.map(o =>
+      `<label><input type="checkbox" value="${o}"> ${o}</label>`
+    ).join("");
   }
 
   document.getElementById("options-box").innerHTML = html;
 }
 
-function respostaMenu(v) {
-  if (v !== "") {
-    respostas.push(v);
-    proxima();
-  }
-}
-
 function proxima() {
   const q = perguntas[atual];
 
-  if (q.tipo === "checkbox") {
-    const marcados = [...document.querySelectorAll("input[type=checkbox]:checked")].map(e => e.value);
-
+  if (q.tipo === "menu") {
+    let v = document.getElementById("sel").value;
+    if (!v) {
+      alert("Selecione uma opção!");
+      return;
+    }
+    respostas.push(v);
+  } else {
+    let marcados = [...document.querySelectorAll("input:checked")]
+      .map(e => e.value);
     if (marcados.length === 0) {
-      alert("Selecione pelo menos uma opção.");
+      alert("Selecione pelo menos uma opção!");
       return;
     }
     respostas.push(marcados);
   }
 
   atual++;
-  if (atual < perguntas.length) {
-    mostrar();
-  } else {
-    finalizar();
-  }
+  if (atual < perguntas.length) mostrar();
+  else finalizar();
 }
 
 function finalizar() {
   document.getElementById("quiz-container").innerHTML = `
-    <h2>Quiz finalizado!</h2>
-    <p>Respostas registradas.</p>
-    <button onclick="location.reload()">Refazer</button>
+    <h2>Quiz Finalizado!</h2>
+    <p>Respostas salvas.</p>
   `;
 }
 
