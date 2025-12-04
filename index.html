@@ -1,91 +1,163 @@
-let perguntas = [
-  // 1 a 6 -> menu para você preencher depois
-  { tipo: "menu", texto: "Pergunta 1", opcoes: ["", "", ""] },
-  { tipo: "menu", texto: "Pergunta 2", opcoes: ["", "", ""] },
-  { tipo: "menu", texto: "Pergunta 3", opcoes: ["", "", ""] },
-  { tipo: "menu", texto: "Pergunta 4", opcoes: ["", "", ""] },
-  { tipo: "menu", texto: "Pergunta 5", opcoes: ["", "", ""] },
-  { tipo: "menu", texto: "Pergunta 6", opcoes: ["", "", ""] },
-
-  // 7 a 11 -> checkbox para você preencher depois
-  { tipo: "checkbox", texto: "Pergunta 7", opcoes: ["", "", "", ""] },
-  { tipo: "checkbox", texto: "Pergunta 8", opcoes: ["", "", "", ""] },
-  { tipo: "checkbox", texto: "Pergunta 9", opcoes: ["", "", "", ""] },
-  { tipo: "checkbox", texto: "Pergunta 10", opcoes: ["", "", "", ""] },
-  { tipo: "checkbox", texto: "Pergunta 11", opcoes: ["", "", "", ""] },
-
-  // 12 a 29 -> menu suspenso com opções fixas
-  ...Array.from({ length: 18 }, (_, i) => ({
-    tipo: "menu",
-    texto: `Pergunta ${i + 12}`,
-    opcoes: [
-      "Nunca fiz e não tenho vontade",
-      "Nunca fiz mas tenho curiosidade",
-      "Já fiz e não gostei",
-      "Já fiz e repetiria com prazer"
-    ]
-  }))
-];
-
-let respostas = [];
-let atual = 0;
-
-function mostrar() {
-  const q = perguntas[atual];
-  document.getElementById("progress").innerText = `Pergunta ${atual + 1} de ${perguntas.length}`;
-  document.getElementById("question-box").innerText = q.texto;
-
-  let html = "";
-
-  if (q.tipo === "menu") {
-    html += `<select onchange="respostaMenu(this.value)">
-      <option value="">Selecione...</option>
-      ${q.opcoes.map(o => `<option value="${o}">${o}</option>`).join("")}
-    </select>`;
-  }
-
-  if (q.tipo === "checkbox") {
-    html += q.opcoes.map((o, i) => `
-      <label><input type="checkbox" id="c${i}" value="${o}"> ${o}</label>
-    `).join("");
-  }
-
-  document.getElementById("options-box").innerHTML = html;
-}
-
-function respostaMenu(v) {
-  if (v !== "") {
-    respostas.push(v);
-    proxima();
-  }
-}
-
-function proxima() {
-  const q = perguntas[atual];
-
-  if (q.tipo === "checkbox") {
-    const marcados = [...document.querySelectorAll("input[type=checkbox]:checked")].map(x => x.value);
-    if (marcados.length === 0) {
-      alert("Selecione ao menos uma opção.");
-      return;
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfis de Prazer</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
     }
-    respostas.push(marcados);
-  }
 
-  atual++;
-  if (atual < perguntas.length) {
-    mostrar();
-  } else {
-    finalizar();
-  }
-}
+    body {
+      font-family: Arial, sans-serif;
+      background: radial-gradient(circle at top, #3b1f4a 0, #050007 45%, #000 100%);
+      color: #f5f5f5;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
 
-function finalizar() {
-  document.getElementById("quiz-container").innerHTML = `
-    <h2>Quiz finalizado!</h2>
-    <p>As respostas foram registradas localmente.</p>
-    <button onclick="location.reload()">Refazer</button>
-  `;
-}
+    .container {
+      width: 100%;
+      max-width: 520px;
+      background: rgba(15, 10, 25, 0.96);
+      border-radius: 16px;
+      padding: 24px 20px 20px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
 
-mostrar();
+    h1 {
+      text-align: center;
+      font-size: 22px;
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #fdf5ff;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: #c6b3ff;
+      margin-bottom: 18px;
+    }
+
+    .progress {
+      font-size: 12px;
+      color: #c4c4c4;
+      margin-bottom: 8px;
+      text-align: right;
+    }
+
+    .question {
+      margin-bottom: 14px;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .options label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.04);
+      padding: 10px 12px;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s ease-in-out;
+      font-size: 14px;
+    }
+
+    .options select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      font-size: 14px;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+    }
+
+    .options input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #e940ff;
+    }
+
+    button {
+      width: 100%;
+      padding: 11px 16px;
+      font-size: 15px;
+      border: none;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #e940ff, #ff6a3d);
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, opacity 0.12s ease;
+      box-shadow: 0 0 18px rgba(233, 64, 255, 0.55);
+    }
+
+    .options label:hover {
+      border-color: #e940ff;
+      background: rgba(233, 64, 255, 0.12);
+    }
+
+    .results-title {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 20px;
+      color: #fdf5ff;
+    }
+
+    .results-text {
+      text-align: center;
+      font-size: 13px;
+      color: #c6c6d9;
+      margin-bottom: 14px;
+    }
+
+    .ranking {
+      list-style: none;
+      margin-bottom: 18px;
+    }
+
+    .small {
+      font-size: 12px;
+      text-align: center;
+      color: #8b8b9c;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="quiz-container">
+    <h1>Perfis de Prazer</h1>
+    <p class="subtitle">Descubra o ranking das suas fantasias escondidas.</p>
+
+    <div class="progress" id="progress"></div>
+    <div class="question" id="question-box"></div>
+    <div class="options" id="options-box"></div>
+    <p class="small">Este teste é apenas recreativo e anônimo.</p>
+  </div>
+
+  <!-- 👇 AQUI ESTÁ O QUE FALTAVA 👇 -->
+  <script src="script.js"></script>
+
+</body>
+</html>
