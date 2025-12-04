@@ -1,19 +1,139 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Quiz</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Perfis de Prazer</title>
+
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: radial-gradient(circle at top, #3b1f4a 0, #050007 45%, #000 100%);
+      color: #f5f5f5;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 520px;
+      background: rgba(15, 10, 25, 0.96);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 0 30px rgba(0,0,0,0.8);
+      border: 1px solid rgba(255,255,255,0.05);
+    }
+
+    h1 {
+      text-align: center;
+      font-size: 22px;
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #eae2ff;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 13px;
+      color: #c6b3ff;
+      margin-bottom: 18px;
+    }
+
+    .progress {
+      text-align: right;
+      font-size: 12px;
+      color: #c4c4c4;
+      margin-bottom: 10px;
+    }
+
+    .question {
+      margin-bottom: 14px;
+      font-size: 17px;
+      line-height: 1.4;
+      color: #fff;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    select, input[type="checkbox"] {
+      accent-color: #e940ff;
+    }
+
+    select {
+      padding: 10px;
+      width: 100%;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.08);
+      color: #fff;
+      border: none;
+    }
+
+    label {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      background: rgba(255,255,255,0.05);
+      padding: 10px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      cursor: pointer;
+      border: 1px solid transparent;
+    }
+
+    label:hover {
+      border-color: #e940ff;
+    }
+
+    #next-btn {
+      width: 100%;
+      margin-top: 16px;
+      padding: 12px;
+      border: none;
+      font-size: 15px;
+      border-radius: 100px;
+      background: linear-gradient(90deg, #e940ff, #ff6a3d);
+      color: #fff;
+      cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0 0 15px rgba(233,64,255,0.5);
+    }
+
+    #next-btn:hover {
+      opacity: 0.9;
+    }
+
+    .small {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 12px;
+      color: #9897ac;
+    }
+  </style>
+
 </head>
+
 <body>
+  <div class="container" id="quiz-container">
+    <h1>Perfis de Prazer</h1>
+    <p class="subtitle">Descubra o ranking das suas fantasias escondidas.</p>
 
-<div id="quiz-container">
-  <div id="progress"></div>
-  <div id="question-box"></div>
-  <div id="options-box"></div>
-  <button onclick="proxima()">Próxima</button>
-</div>
+    <div id="progress" class="progress"></div>
+    <div id="question-box" class="question"></div>
+    <div id="options-box" class="options"></div>
+    <button id="next-btn" onclick="proxima()">Próxima</button>
+    <p class="small">Este teste é apenas recreativo e anônimo.</p>
+  </div>
 
-<script src="quiz.js"></script>
+  <script src="quiz.js"></script>
 </body>
 </html>
