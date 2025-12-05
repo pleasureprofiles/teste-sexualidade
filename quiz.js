@@ -1,5 +1,5 @@
 // COLE AQUI APENAS O ID DA PLANILHA (sem URL)
-const SHEET_ID = "COLOQUE_O_ID_AQUI";
+const SHEET_ID = "1wyBWZ7jZzR67hLcRiVW8GMFke4HWH2wmIsGJ-D-AKDI";
 
 function doPost(e) {
   try {
