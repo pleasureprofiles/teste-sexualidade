@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Perfis de Prazer</title>
   <style>
     * {
@@ -22,7 +22,7 @@
       padding: 20px;
     }
 
-    .iframe-container {
+    #quiz-container {
       width: 100%;
       max-width: 640px;
       border-radius: 12px;
@@ -31,18 +31,17 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
       background: rgba(15, 10, 25, 0.96);
       padding: 30px;
+      text-align: center;
     }
 
     #progress {
       font-size: 18px;
       margin-bottom: 15px;
-      text-align: center;
     }
 
     #question-box {
       font-size: 22px;
       margin-bottom: 20px;
-      text-align: center;
     }
 
     #options-box {
@@ -62,12 +61,8 @@
 
     label {
       display: block;
-      margin-bottom: 8px;
-      font-size: 16px;
-    }
-
-    input[type="checkbox"] {
-      margin-right: 8px;
+      margin-bottom: 10px;
+      font-size: 18px;
     }
 
     button {
@@ -89,15 +84,15 @@
 </head>
 <body>
 
-  <div class="iframe-container" id="quiz-container">
+  <div id="quiz-container">
     <div id="progress"></div>
     <div id="question-box"></div>
     <div id="options-box"></div>
     <button onclick="proxima()">Próxima</button>
   </div>
 
-<script src="quiz.js?v=10"></script>
+  <!-- v=1 ajuda a forçar o navegador a pegar a versão nova do JS -->
+  <script src="quiz.js?v=1"></script>
 
 </body>
 </html>
-
