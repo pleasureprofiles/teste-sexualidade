@@ -91,8 +91,13 @@
     <button id="btn-next" onclick="proxima()">Próxima</button>
   </div>
 
-  <!-- v=5 força o navegador a pegar a versão nova do quiz.js -->
-  <script src="quiz.js?v=5"></script>
+  <!-- Formulário invisível para mandar as respostas direto pro Apps Script -->
+  <form id="sendForm" method="POST" style="display:none;">
+    <input type="hidden" name="respostas" id="respostas-input">
+  </form>
+
+  <!-- v=10 força o navegador a pegar a versão nova do JS -->
+  <script src="quiz.js?v=10"></script>
 
 </body>
 </html>
