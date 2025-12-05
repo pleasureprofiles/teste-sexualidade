@@ -1,6 +1,6 @@
 // URL do seu Apps Script (Web App)
+// URL do seu Apps Script (Web App)
 const WEBAPP_URL = "https://script.google.com/macros/s/AKfycbx25OnBB3BgbSK_1PcmHyPZneMSyoMfjnA2cxB7OLdwdWnDJmHH_I5mux9cZR7HC9hKqw/exec";
-
 let perguntas = [
     // 1 - signo
     {
