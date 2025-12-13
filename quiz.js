@@ -5,71 +5,83 @@ let telaAtual = 0;
 let enviando = false;
 const imageCache = {};
 
-// Paleta de cores para cada tipo de background
+// Paleta de cores SUTIS para cada tipo de background
 const paletas = {
-    "BGBV": { btn: "#8B4513", btnHover: "#A0522D", text: "#FFE4B5" },
-    "BG01P01": { btn: "#4B0082", btnHover: "#6A0DAD", text: "#E6E6FA" },
-    "BG1": { btn: "#483D8B", btnHover: "#6959CD", text: "#E6E6FA" },
-    "BG02P02": { btn: "#8B0000", btnHover: "#B22222", text: "#FFB6C1" },
-    "BG2": { btn: "#800020", btnHover: "#A52A2A", text: "#FFC0CB" },
-    "BG03P03": { btn: "#2F4F4F", btnHover: "#3D5C5C", text: "#B0E0E6" },
-    "BG3": { btn: "#1C3A3A", btnHover: "#2E5454", text: "#AFEEEE" },
-    "BG04P04": { btn: "#4A0E0E", btnHover: "#6B1414", text: "#FFD700" },
-    "BG4": { btn: "#5C1A1A", btnHover: "#7D2323", text: "#FFA500" },
-    "BG05P05": { btn: "#1A0A2E", btnHover: "#2D1450", text: "#DDA0DD" },
-    "BG5": { btn: "#2E0854", btnHover: "#3D0B6B", text: "#DA70D6" },
-    "BGRDOURADOLIMPO": { btn: "#B8860B", btnHover: "#DAA520", text: "#FFFACD" },
-    "BGRDOURADO": { btn: "#D4AF37", btnHover: "#FFD700", text: "#1A1A1A" },
-    "BGRESULT": { btn: "#C9A227", btnHover: "#E6B800", text: "#1A1A1A" }
+    "BGBV": { btn: "rgba(180, 140, 100, 0.35)", btnHover: "rgba(200, 160, 120, 0.5)", text: "#F5E6D3", border: "rgba(245, 230, 211, 0.4)" },
+    "BG01P01": { btn: "rgba(150, 130, 180, 0.3)", btnHover: "rgba(170, 150, 200, 0.45)", text: "#E8E0F0", border: "rgba(232, 224, 240, 0.4)" },
+    "BG1": { btn: "rgba(130, 120, 170, 0.35)", btnHover: "rgba(150, 140, 190, 0.5)", text: "#E6E0F5", border: "rgba(230, 224, 245, 0.4)" },
+    "BG02P02": { btn: "rgba(180, 100, 120, 0.35)", btnHover: "rgba(200, 120, 140, 0.5)", text: "#FFE0E8", border: "rgba(255, 224, 232, 0.4)" },
+    "BG2": { btn: "rgba(160, 90, 110, 0.35)", btnHover: "rgba(180, 110, 130, 0.5)", text: "#FFD8E4", border: "rgba(255, 216, 228, 0.4)" },
+    "BG03P03": { btn: "rgba(100, 140, 140, 0.35)", btnHover: "rgba(120, 160, 160, 0.5)", text: "#D8F0F0", border: "rgba(216, 240, 240, 0.4)" },
+    "BG3": { btn: "rgba(80, 130, 130, 0.35)", btnHover: "rgba(100, 150, 150, 0.5)", text: "#D0EBEB", border: "rgba(208, 235, 235, 0.4)" },
+    "BG04P04": { btn: "rgba(160, 100, 80, 0.35)", btnHover: "rgba(180, 120, 100, 0.5)", text: "#FFE8D0", border: "rgba(255, 232, 208, 0.4)" },
+    "BG4": { btn: "rgba(150, 90, 70, 0.35)", btnHover: "rgba(170, 110, 90, 0.5)", text: "#FFE0C8", border: "rgba(255, 224, 200, 0.4)" },
+    "BG05P05": { btn: "rgba(120, 80, 150, 0.35)", btnHover: "rgba(140, 100, 170, 0.5)", text: "#E8D8F5", border: "rgba(232, 216, 245, 0.4)" },
+    "BG5": { btn: "rgba(130, 70, 140, 0.35)", btnHover: "rgba(150, 90, 160, 0.5)", text: "#F0D8F8", border: "rgba(240, 216, 248, 0.4)" },
+    "BGRDOURADOLIMPO": { btn: "rgba(200, 170, 100, 0.35)", btnHover: "rgba(220, 190, 120, 0.5)", text: "#FFF8E0", border: "rgba(255, 248, 224, 0.4)" },
+    "BGRDOURADO": { btn: "rgba(210, 180, 90, 0.4)", btnHover: "rgba(230, 200, 110, 0.55)", text: "#FFFAEB", border: "rgba(255, 250, 235, 0.5)" },
+    "BGRESULT": { btn: "rgba(200, 170, 100, 0.4)", btnHover: "rgba(220, 190, 120, 0.55)", text: "#FFF8E0", border: "rgba(255, 248, 224, 0.5)" }
 };
 
 const telas = [
     { tipo: "transicao", bg: "./quiz/BGBV.jpg", botao: "Começar sua Jornada", paleta: "BGBV" },
     { tipo: "transicao", bg: "./quiz/BG01P01.png", botao: "Iniciar Portal 1", paleta: "BG01P01" },
+    
+    // PORTAL 1 - Perguntas básicas
     { tipo: "pergunta", bg: "./quiz/BG1.png", texto: "Qual é o seu signo?", campo: "q1_signo", menu: ["Áries","Touro","Gêmeos","Câncer","Leão","Virgem","Libra","Escorpião","Sagitário","Capricórnio","Aquário","Peixes"], paleta: "BG1" },
     { tipo: "pergunta", bg: "./quiz/BG1.png", texto: "Qual sua faixa etária?", campo: "q2_idade", menu: ["18-24","25-34","35-44","45-54","55-64","65+"], paleta: "BG1" },
     { tipo: "pergunta", bg: "./quiz/BG1.png", texto: "Qual é a sua orientação sexual?", campo: "q3_orientacao", menu: ["Heterossexual","Bissexual","Homossexual","Pansexual"], paleta: "BG1" },
     { tipo: "pergunta", bg: "./quiz/BG1.png", texto: "Qual seu status de relacionamento?", campo: "q4_status", menu: ["Solteira","Namorando","Noiva","Casada","União Estável","Relacionamento Aberto","Divorciada","Viúva","É complicado"], paleta: "BG1" },
     { tipo: "pergunta", bg: "./quiz/BG1.png", texto: "E o seu 'currículo amoroso'?", campo: "q5_curriculo", menu: ["0-1","2-5","6-10","11-20","21-30","31-50","51+"], paleta: "BG1" },
+    
+    // PORTAL 2 - Como se agrada uma Deusa
     { tipo: "transicao", bg: "./quiz/BG02P02.png", botao: "Iniciar Portal 2", paleta: "BG02P02" },
     { tipo: "pergunta", bg: "./quiz/BG2.png", texto: "Quem prefere que tome a iniciativa na hora H?", campo: "q6_iniciativa", menu: ["Eu","Ele(s)","Depende do momento"], paleta: "BG2" },
     { tipo: "pergunta", bg: "./quiz/BG2.png", texto: "O que mais faz seu corpo entrar no clima?", campo: "q7_clima", checkbox: ["Beijos quentes","Carícias no corpo","Toque íntimo","Conversas picantes"], paleta: "BG2" },
     { tipo: "pergunta", bg: "./quiz/BG2.png", texto: "Posição preferida?", campo: "q8_posicoes", checkbox: ["Cavalgando","Papai & Mamãe","De quatro","Em pé","69","De ladinho"], paleta: "BG2" },
     { tipo: "pergunta", bg: "./quiz/BG2.png", texto: "Quantos orgasmos você tem na semana?", campo: "q9_orgasmos", menu: ["Nenhum","1","2–3","4–6","Mais de 6"], paleta: "BG2" },
-    { tipo: "pergunta", bg: "./quiz/BG2.png", texto: "O tamanho importa? Qual a preferência?", campo: "q10_tamanho", checkbox: ["12 a 15cm","15 a 18cm","19 a 21cm","22cm ou mais"], paleta: "BG2" },
-    { tipo: "pergunta", bg: "./quiz/BG2.png", texto: "O que te leva ao auge do prazer?", campo: "q11_auge", checkbox: ["Sexo oral","Penetração","Estimulação com dedos","Brinquedos","Estimulação anal","Vários ao mesmo tempo"], paleta: "BG2" },
+    { tipo: "pergunta", bg: "./quiz/BG2.png", texto: "O tamanho importa? Qual a preferência da Deusa?", campo: "q10_tamanho", checkbox: ["12 a 15cm","15 a 18cm","19 a 21cm","22cm ou mais"], paleta: "BG2" },
+    { tipo: "pergunta", bg: "./quiz/BG2.png", texto: "O que normalmente te leva ao auge do prazer?", campo: "q11_auge", checkbox: ["Sexo oral","Penetração","Estimulação externa com dedos","Brinquedinhos","Estimulação anal","Vários ao mesmo tempo"], paleta: "BG2" },
+    
+    // PORTAL 3 - Os mundos secretos
     { tipo: "transicao", bg: "./quiz/BG03P03.png", botao: "Iniciar Portal 3", paleta: "BG03P03" },
     { tipo: "pergunta", bg: "./quiz/BG3.png", texto: "Quando a imaginação bate sozinha, a que você recorre:", campo: "q12_sozinha", checkbox: ["Contos eróticos","Vídeo pornô","Vibrador","Brinquedos variados","Banho estratégico"], paleta: "BG3" },
-    { tipo: "pergunta", bg: "./quiz/BG3.png", texto: "Pessoas do mesmo sexo", campo: "q13_mesmoSexo", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG3" },
-    { tipo: "pergunta", bg: "./quiz/BG3.png", texto: "A três (2 homens e você)", campo: "q13b_tres2Homens", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG3" },
-    { tipo: "pergunta", bg: "./quiz/BG3.png", texto: "A três (você, amiga e parceiro)", campo: "q14_tresAmigaParceiro", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG3" },
-    { tipo: "pergunta", bg: "./quiz/BG3.png", texto: "Com pessoas trans", campo: "q15_trans", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG3" },
-    { tipo: "pergunta", bg: "./quiz/BG3.png", texto: "Com total desconhecido(a)", campo: "q16_desconhecido", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG3" },
-    { tipo: "pergunta", bg: "./quiz/BG3.png", texto: "Troca de casais / Swing", campo: "q17_swing", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG3" },
-    { tipo: "pergunta", bg: "./quiz/BG3.png", texto: "Suruba (mais de 3 pessoas)", campo: "q18_orgia", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG3" },
+    { tipo: "pergunta", bg: "./quiz/BG3.png", texto: "Já experimentou pessoas do mesmo sexo na cama?", campo: "q13_mesmoSexo", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG3" },
+    { tipo: "pergunta", bg: "./quiz/BG3.png", texto: "Já teve experiências a três (2 homens e você)?", campo: "q13b_tres2Homens", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG3" },
+    { tipo: "pergunta", bg: "./quiz/BG3.png", texto: "Experiências a três (você, uma amiga e um parceiro)?", campo: "q14_tresAmigaParceiro", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG3" },
+    { tipo: "pergunta", bg: "./quiz/BG3.png", texto: "Experiências com pessoas trans?", campo: "q15_trans", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG3" },
+    { tipo: "pergunta", bg: "./quiz/BG3.png", texto: "Sexo com total desconhecido(a)?", campo: "q16_desconhecido", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG3" },
+    { tipo: "pergunta", bg: "./quiz/BG3.png", texto: "Troca de casais / Swing?", descricao: "Foi convidada pelo parceiro para troca de casais.", campo: "q17_swing", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG3" },
+    { tipo: "pergunta", bg: "./quiz/BG3.png", texto: "Suruba (mais de 3 pessoas)?", descricao: "Foi convidada para uma suruba com mais de 3 pessoas envolvidas.", campo: "q18_orgia", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG3" },
+    
+    // PORTAL 4 - Poder & Dominação
     { tipo: "transicao", bg: "./quiz/BG04P04.png", botao: "Iniciar Portal 4", paleta: "BG04P04" },
-    { tipo: "pergunta", bg: "./quiz/BG4.png", texto: "O que você prefere?", campo: "q19_prefereDom", menu: ["Ser dominada","Dominar"], paleta: "BG4" },
-    { tipo: "pergunta", bg: "./quiz/BG4.png", texto: "Inversão de papéis", campo: "q20_inversaoPapeis", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG4" },
-    { tipo: "pergunta", bg: "./quiz/BG4.png", texto: "Bondage", campo: "q21_bondage", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG4" },
-    { tipo: "pergunta", bg: "./quiz/BG4.png", texto: "Sado Moderado", campo: "q22_sadoModerado", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG4" },
-    { tipo: "pergunta", bg: "./quiz/BG4.png", texto: "Sado Intenso", campo: "q23_sadoHard", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG4" },
-    { tipo: "pergunta", bg: "./quiz/BG4.png", texto: "Humilhação erótica", campo: "q24_humilhacaoParceiro", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG4" },
-    { tipo: "pergunta", bg: "./quiz/BG4.png", texto: "Pegging", campo: "q26_pegging", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG4" },
+    { tipo: "pergunta", bg: "./quiz/BG4.png", texto: "O que você prefere, no geral?", campo: "q19_prefereDom", menu: ["Ser dominada","Dominar"], paleta: "BG4" },
+    { tipo: "pergunta", bg: "./quiz/BG4.png", texto: "Inversão de papéis", descricao: "Homem no papel de \"seu escravo\", obedecendo às suas ordens.", campo: "q20_inversaoPapeis", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG4" },
+    { tipo: "pergunta", bg: "./quiz/BG4.png", texto: "Bondage", descricao: "Ser imobilizada ou imobilizar o outro com algemas, cordas, amarras, uso de chicotes, castigar ou ser castigada.", campo: "q21_bondage", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG4" },
+    { tipo: "pergunta", bg: "./quiz/BG4.png", texto: "Sado Moderado", descricao: "Tapas, puxões, apertos, prendedores, estímulos de dor controlada.", campo: "q22_sadoModerado", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG4" },
+    { tipo: "pergunta", bg: "./quiz/BG4.png", texto: "Sado Intenso", descricao: "Situações em que a dor intensa com uso de acessórios é parte central da cena.", campo: "q23_sadoHard", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG4" },
+    { tipo: "pergunta", bg: "./quiz/BG4.png", texto: "Humilhação erótica do parceiro", descricao: "Rebaixar, provocar, \"pisar\", xingar o parceiro, chamar de \"corno\", \"manso\" etc. em contexto sexual, com consenso, como parte do jogo de poder.", campo: "q24_humilhacaoParceiro", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG4" },
+    { tipo: "pergunta", bg: "./quiz/BG4.png", texto: "Pegging", descricao: "Usar uma cinta no parceiro. Você troca de lugar com seu parceiro, fazendo dele seu submisso com uso de cintas/consolos, invertendo o jogo.", campo: "q26_pegging", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG4" },
+    
+    // PORTAL 5 - A Caixa Preta da Deusa
     { tipo: "transicao", bg: "./quiz/BG05P05.png", botao: "Iniciar Portal 5", paleta: "BG05P05" },
-    { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "Traição com consentimento", campo: "q27_traicaoCons", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG5" },
-    { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "Hotwife Clássica", campo: "q28_cuckoldClassico", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG5" },
-    { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "Confidência Divina da HotWife", campo: "q29_hotwifeConf", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG5" },
-    { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "Adoração Sagrada da Hotwife", campo: "q30_hotwifeAdoracao", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG5" },
-    { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "Hotwife Soberana", campo: "q31_hotwifeSoberana", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG5" },
-    { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "Trono da Cuckqueen", campo: "q32_cuckqueenTrono", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG5" },
-    { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "Banquete Profano da Deusa", campo: "q33_banqueteProfano", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG5" },
+    { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "\"Traição\" com consentimento", descricao: "Ficar com outra pessoa onde o parceiro sabe, autoriza e gosta.", campo: "q27_traicaoCons", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG5" },
+    { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "Hotwife Clássica", descricao: "Você transa com outro homem enquanto seu parceiro assiste, podendo ou não ser humilhado verbalmente.", campo: "q28_cuckoldClassico", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG5" },
+    { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "A Confidência Divina da HotWife", descricao: "Você sai com outro e quando volta conta todos os detalhes sórdidos para seu parceiro na cama, vendo ele delirar de tesão.", campo: "q29_hotwifeConf", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG5" },
+    { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "A Adoração Sagrada da Hotwife", descricao: "Você transa com outro na frente do seu parceiro. Ele assiste ao vivo mas não interage, só pode assistir enquanto você o encara nos olhos.", campo: "q30_hotwifeAdoracao", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG5" },
+    { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "A Hotwife Soberana", descricao: "Você transando com outro homem e ordenando seu parceiro a interagir com ele, enquanto é humilhado como parte da cena consensual.", campo: "q31_hotwifeSoberana", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG5" },
+    { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "O Trono da Cuckqueen", descricao: "Você assiste seu parceiro com outra mulher, mas é você quem controla a cena: escolhe quem entra, até onde vai e quando termina.", campo: "q32_cuckqueenTrono", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG5" },
+    { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "Banquete Profano da Deusa", descricao: "Cenário em que homens e mulheres se entrelaçam livremente — todos com todos — em um festim profano sob a regência da Deusa.", campo: "q33_banqueteProfano", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG5" },
+    
+    // Trindade Profana & Rito Dourado
     { tipo: "transicao", bg: "./quiz/BGRDOURADOLIMPO.png", botao: "Continuar", paleta: "BGRDOURADOLIMPO" },
-    { tipo: "pergunta", bg: "./quiz/BGRDOURADO.png", texto: "Cenário com você, parceiro e outra mulher, qual te chama atenção?", campo: "q34_cenaTrindade", checkbox: ["Beijar ela enquanto ele assiste","As duas com ele","Você e ela mais que com ele","Ele te estimula e você com ela","Revezar"], paleta: "BGRDOURADO" },
-    { tipo: "pergunta", bg: "./quiz/BGRDOURADO.png", texto: "Seu foco seria?", campo: "q35_focoTrindade", checkbox: ["Não faria","Tesão com ela","Dividir o parceiro","Ele olhar","Ser o centro","Observar"], paleta: "BGRDOURADO" },
-    { tipo: "pergunta", bg: "./quiz/BGRDOURADO.png", texto: "E o ciúmes?", campo: "q36_ciumesTrindade", menu: ["Eu travaria","Ciúmes mas excitação fala mais alto","Com regras claras relaxo","Me excita ver ele com outra","Mais ciumenta com ela"], paleta: "BGRDOURADO" },
-    { tipo: "pergunta", bg: "./quiz/BGRDOURADO.png", texto: "Golden shower", campo: "q37_goldenNivel", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BGRDOURADO" },
-    { tipo: "pergunta", bg: "./quiz/BGRDOURADO.png", texto: "Que vibe?", campo: "q38_goldenVibe", checkbox: ["Nojo","Curiosidade","Humilhação erótica","Dominação intensa","Intimidade extrema","Mais ideia que prática"], paleta: "BGRDOURADO" },
-    { tipo: "pergunta", bg: "./quiz/BGRDOURADO.png", texto: "Qual papel?", campo: "q39_goldenPapel", checkbox: ["Fazer","Receber","Alternar","Assistir","Nenhuma"], paleta: "BGRDOURADO" }
+    { tipo: "pergunta", bg: "./quiz/BGRDOURADO.png", texto: "Trindade Profana da Deusa", descricao: "Em um cenário com você, seu parceiro e outra mulher, qual dessas cenas mais te chama atenção?", campo: "q34_cenaTrindade", checkbox: ["Beijar e tocar a mulher enquanto o parceiro assiste","As duas com ele ao mesmo tempo","Você e ela se divertindo mais entre vocês do que com ele","Ele focado em te estimular enquanto você brinca com ela","Revezar: hora você com ele, hora ela com ele, hora só vocês duas"], paleta: "BGRDOURADO" },
+    { tipo: "pergunta", bg: "./quiz/BGRDOURADO.png", texto: "Numa situação a três com outra mulher, seu foco principal seria…?", campo: "q35_focoTrindade", checkbox: ["Não faria de forma alguma","Sentir tesão com ela, independente dele","Dividir o parceiro e curtir a energia dos três juntos","Deixar ele olhar enquanto você aproveita com ela","Ser o centro das atenções dos dois","Deixar a outra mulher ser o centro e observar tudo"], paleta: "BGRDOURADO" },
+    { tipo: "pergunta", bg: "./quiz/BGRDOURADO.png", texto: "E o ciúmes nessa história com outra mulher?", campo: "q36_ciumesTrindade", menu: ["Eu travaria, não consigo nem imaginar dividir ele","Teria ciúmes, mas acho que a excitação falaria mais alto","Se tiver regra clara, confiança e combinado, eu relaxo","Me excita justamente ver ele com outra na minha frente","Eu seria mais ciumenta com ela do que com ele"], paleta: "BGRDOURADO" },
+    { tipo: "pergunta", bg: "./quiz/BGRDOURADO.png", texto: "Golden Shower", descricao: "Prática em que o xixi se torna instrumento de prazer, dominação e humilhação erótica, sempre dentro de um acordo entre a Deusa e seu parceiro.", campo: "q37_goldenNivel", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BGRDOURADO" },
+    { tipo: "pergunta", bg: "./quiz/BGRDOURADO.png", texto: "Quando você pensa em golden shower, qual dessas vibes mais parece com você?", campo: "q38_goldenVibe", checkbox: ["Me dá mais nojo do que tesão","Sinto curiosidade, mas ainda sem saber se ia rolar na prática","Vejo como parte de humilhação erótica","Vejo como um ato de dominação/submissão bem intenso","Enxergo como uma forma extrema de intimidade e confiança","Me excita mais a ideia do que a prática em si"], paleta: "BGRDOURADO" },
+    { tipo: "pergunta", bg: "./quiz/BGRDOURADO.png", texto: "Rito Dourado da Deusa: qual papel mais combina com você?", campo: "q39_goldenPapel", checkbox: ["Fazer xixi no parceiro","Receber o xixi do parceiro","Alternar: às vezes dou, às vezes recebo","Só assistir a cena acontecendo, sem participar diretamente","Nenhuma dessas combina comigo (por enquanto)"], paleta: "BGRDOURADO" }
 ];
 
 function preloadAllImages() {
@@ -92,18 +104,18 @@ function aplicarPaletaBotao(paletaKey) {
             #btn-container button {
                 background: ${paleta.btn};
                 color: ${paleta.text};
-                border: 2px solid ${paleta.text}40;
+                border: 1px solid ${paleta.border};
                 font-weight: 600;
                 letter-spacing: 0.5px;
-                text-shadow: none;
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
+                text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+                backdrop-filter: blur(8px);
+                -webkit-backdrop-filter: blur(8px);
             }
             #btn-container button:hover {
                 background: ${paleta.btnHover};
-                border-color: ${paleta.text}70;
+                border-color: ${paleta.text};
                 transform: translateY(-2px);
-                box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+                box-shadow: 0 6px 20px rgba(0,0,0,0.3);
             }
         `;
     }
@@ -126,35 +138,65 @@ function mostrarTela() {
         container.innerHTML = '';
         btnContainer.innerHTML = `<button type="button" id="btn-avancar">${tela.botao}</button>`;
         
-        // Event listener direto para garantir funcionamento
         document.getElementById('btn-avancar').addEventListener('click', function(e) {
             e.preventDefault();
             avancarTela();
         });
         
     } else if (tela.tipo === "pergunta") {
-        let html = `<div id="question-box">${tela.texto}</div><div id="options-box">`;
+        // Monta a pergunta com título e descrição
+        let html = `<div id="question-box">
+            <div class="question-title">${tela.texto}</div>
+            ${tela.descricao ? `<div class="question-desc">${tela.descricao}</div>` : ''}
+        </div><div id="options-box">`;
         
         if (tela.menu) {
+            // Menu suspenso - avança automaticamente
             html += '<select id="resposta" required><option value="">Selecione...</option>';
             tela.menu.forEach(o => html += `<option value="${o}">${o}</option>`);
             html += '</select>';
+            html += '</div>';
+            container.innerHTML = html;
+            btnContainer.innerHTML = ''; // SEM BOTÃO para menu
+            
+            // Auto-avanço ao selecionar
+            document.getElementById('resposta').addEventListener('change', function() {
+                if (this.value) {
+                    salvarRespostaMenu();
+                    setTimeout(() => avancarTela(), 300); // Pequeno delay para feedback visual
+                }
+            });
+            
         } else if (tela.checkbox) {
+            // Checkbox - precisa de botão
             tela.checkbox.forEach(o => html += `<label><input type="checkbox" name="check" value="${o}">${o}</label>`);
+            html += '</div>';
+            container.innerHTML = html;
+            btnContainer.innerHTML = '<button type="button" id="btn-proxima">Próxima</button>';
+            
+            document.getElementById('btn-proxima').addEventListener('click', function(e) {
+                e.preventDefault();
+                validarCheckboxEAvancar();
+            });
         }
-        
-        html += '</div>';
-        container.innerHTML = html;
-        btnContainer.innerHTML = '<button type="button" id="btn-proxima">Próxima</button>';
-        
-        // Event listener para botão de pergunta
-        document.getElementById('btn-proxima').addEventListener('click', function(e) {
-            e.preventDefault();
-            validarEAvancar();
-        });
     }
     
     window.scrollTo(0, 0);
+}
+
+// Salva resposta de menu suspenso
+function salvarRespostaMenu() {
+    const tela = telas[telaAtual];
+    const sel = document.getElementById("resposta");
+    
+    if (sel && sel.value) {
+        let resp = sel.value;
+        // Converte para número se for escala de experiência
+        if (tela.menu[0] === "Nunca fiz e não tenho vontade") {
+            resp = tela.menu.indexOf(sel.value) + 1;
+        }
+        answers[tela.campo] = resp;
+    }
 }
 
 // Função separada para avançar sem validação (transições)
@@ -168,44 +210,28 @@ function avancarTela() {
     }
 }
 
-// Função para validar resposta e avançar (perguntas)
-function validarEAvancar() {
+// Valida checkbox e avança
+function validarCheckboxEAvancar() {
     if (enviando) return;
     const tela = telas[telaAtual];
     
-    let resp = null;
-    
-    if (tela.menu) {
-        const sel = document.getElementById("resposta");
-        if (!sel || !sel.value) {
-            alert("Escolha uma opção!");
-            return;
-        }
-        resp = sel.value;
-        // Converte para número se for escala de experiência
-        if (tela.menu[0] === "Nunca fiz e não tenho vontade") {
-            resp = tela.menu.indexOf(sel.value) + 1;
-        }
-    } else if (tela.checkbox) {
-        const checks = document.querySelectorAll('input[name="check"]:checked');
-        if (checks.length === 0) {
-            alert("Escolha pelo menos uma opção!");
-            return;
-        }
-        resp = Array.from(checks).map(c => c.value);
+    const checks = document.querySelectorAll('input[name="check"]:checked');
+    if (checks.length === 0) {
+        alert("Escolha pelo menos uma opção!");
+        return;
     }
     
-    answers[tela.campo] = resp;
+    answers[tela.campo] = Array.from(checks).map(c => c.value);
     avancarTela();
 }
 
-// Mantém compatibilidade com onclick inline (caso precise)
+// Mantém compatibilidade
 function proximaTela() {
     const tela = telas[telaAtual];
     if (tela.tipo === "transicao") {
         avancarTela();
-    } else {
-        validarEAvancar();
+    } else if (tela.checkbox) {
+        validarCheckboxEAvancar();
     }
 }
 
