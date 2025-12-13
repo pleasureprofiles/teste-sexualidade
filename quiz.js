@@ -18,24 +18,28 @@ const paletas = {
     "BG4": { btn: "rgba(150, 90, 70, 0.35)", btnHover: "rgba(170, 110, 90, 0.5)", text: "#FFE0C8", border: "rgba(255, 224, 200, 0.4)" },
     "BG05P05": { btn: "rgba(120, 80, 150, 0.35)", btnHover: "rgba(140, 100, 170, 0.5)", text: "#E8D8F5", border: "rgba(232, 216, 245, 0.4)" },
     "BG5": { btn: "rgba(130, 70, 140, 0.35)", btnHover: "rgba(150, 90, 160, 0.5)", text: "#F0D8F8", border: "rgba(240, 216, 248, 0.4)" },
-    "BGRDOURADOLIMPO": { btn: "rgba(200, 170, 100, 0.35)", btnHover: "rgba(220, 190, 120, 0.5)", text: "#FFF8E0", border: "rgba(255, 248, 224, 0.4)" },
     "BGRDOURADO": { btn: "rgba(210, 180, 90, 0.4)", btnHover: "rgba(230, 200, 110, 0.55)", text: "#FFFAEB", border: "rgba(255, 250, 235, 0.5)" },
     "BGRESULT": { btn: "rgba(200, 170, 100, 0.4)", btnHover: "rgba(220, 190, 120, 0.55)", text: "#FFF8E0", border: "rgba(255, 248, 224, 0.5)" }
 };
 
 const telas = [
+    // TELA 0 - Boas-vindas
     { tipo: "transicao", bg: "./quiz/BGBV.jpg", botao: "Começar sua Jornada", paleta: "BGBV" },
+    
+    // TELA 1 - Portal 1
     { tipo: "transicao", bg: "./quiz/BG01P01.png", botao: "Iniciar Portal 1", paleta: "BG01P01" },
     
-    // PORTAL 1 - Perguntas básicas
+    // TELAS 2-6 - Perguntas Portal 1
     { tipo: "pergunta", bg: "./quiz/BG1.png", texto: "Qual é o seu signo?", campo: "q1_signo", menu: ["Áries","Touro","Gêmeos","Câncer","Leão","Virgem","Libra","Escorpião","Sagitário","Capricórnio","Aquário","Peixes"], paleta: "BG1" },
     { tipo: "pergunta", bg: "./quiz/BG1.png", texto: "Qual sua faixa etária?", campo: "q2_idade", menu: ["18-24","25-34","35-44","45-54","55-64","65+"], paleta: "BG1" },
     { tipo: "pergunta", bg: "./quiz/BG1.png", texto: "Qual é a sua orientação sexual?", campo: "q3_orientacao", menu: ["Heterossexual","Bissexual","Homossexual","Pansexual"], paleta: "BG1" },
     { tipo: "pergunta", bg: "./quiz/BG1.png", texto: "Qual seu status de relacionamento?", campo: "q4_status", menu: ["Solteira","Namorando","Noiva","Casada","União Estável","Relacionamento Aberto","Divorciada","Viúva","É complicado"], paleta: "BG1" },
     { tipo: "pergunta", bg: "./quiz/BG1.png", texto: "E o seu 'currículo amoroso'?", campo: "q5_curriculo", menu: ["0-1","2-5","6-10","11-20","21-30","31-50","51+"], paleta: "BG1" },
     
-    // PORTAL 2 - Como se agrada uma Deusa
+    // TELA 7 - Portal 2
     { tipo: "transicao", bg: "./quiz/BG02P02.png", botao: "Iniciar Portal 2", paleta: "BG02P02" },
+    
+    // TELAS 8-13 - Perguntas Portal 2
     { tipo: "pergunta", bg: "./quiz/BG2.png", texto: "Quem prefere que tome a iniciativa na hora H?", campo: "q6_iniciativa", menu: ["Eu","Ele(s)","Depende do momento"], paleta: "BG2" },
     { tipo: "pergunta", bg: "./quiz/BG2.png", texto: "O que mais faz seu corpo entrar no clima?", campo: "q7_clima", checkbox: ["Beijos quentes","Carícias no corpo","Toque íntimo","Conversas picantes"], paleta: "BG2" },
     { tipo: "pergunta", bg: "./quiz/BG2.png", texto: "Posição preferida?", campo: "q8_posicoes", checkbox: ["Cavalgando","Papai & Mamãe","De quatro","Em pé","69","De ladinho"], paleta: "BG2" },
@@ -43,8 +47,10 @@ const telas = [
     { tipo: "pergunta", bg: "./quiz/BG2.png", texto: "O tamanho importa? Qual a preferência da Deusa?", campo: "q10_tamanho", checkbox: ["12 a 15cm","15 a 18cm","19 a 21cm","22cm ou mais"], paleta: "BG2" },
     { tipo: "pergunta", bg: "./quiz/BG2.png", texto: "O que normalmente te leva ao auge do prazer?", campo: "q11_auge", checkbox: ["Sexo oral","Penetração","Estimulação externa com dedos","Brinquedinhos","Estimulação anal","Vários ao mesmo tempo"], paleta: "BG2" },
     
-    // PORTAL 3 - Os mundos secretos
+    // TELA 14 - Portal 3
     { tipo: "transicao", bg: "./quiz/BG03P03.png", botao: "Iniciar Portal 3", paleta: "BG03P03" },
+    
+    // TELAS 15-22 - Perguntas Portal 3
     { tipo: "pergunta", bg: "./quiz/BG3.png", texto: "Quando a imaginação bate sozinha, a que você recorre:", campo: "q12_sozinha", checkbox: ["Contos eróticos","Vídeo pornô","Vibrador","Brinquedos variados","Banho estratégico"], paleta: "BG3" },
     { tipo: "pergunta", bg: "./quiz/BG3.png", texto: "Já experimentou pessoas do mesmo sexo na cama?", campo: "q13_mesmoSexo", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG3" },
     { tipo: "pergunta", bg: "./quiz/BG3.png", texto: "Já teve experiências a três (2 homens e você)?", campo: "q13b_tres2Homens", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG3" },
@@ -54,8 +60,10 @@ const telas = [
     { tipo: "pergunta", bg: "./quiz/BG3.png", texto: "Troca de casais / Swing?", descricao: "Foi convidada pelo parceiro para troca de casais.", campo: "q17_swing", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG3" },
     { tipo: "pergunta", bg: "./quiz/BG3.png", texto: "Suruba (mais de 3 pessoas)?", descricao: "Foi convidada para uma suruba com mais de 3 pessoas envolvidas.", campo: "q18_orgia", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG3" },
     
-    // PORTAL 4 - Poder & Dominação
+    // TELA 23 - Portal 4
     { tipo: "transicao", bg: "./quiz/BG04P04.png", botao: "Iniciar Portal 4", paleta: "BG04P04" },
+    
+    // TELAS 24-30 - Perguntas Portal 4
     { tipo: "pergunta", bg: "./quiz/BG4.png", texto: "O que você prefere, no geral?", campo: "q19_prefereDom", menu: ["Ser dominada","Dominar"], paleta: "BG4" },
     { tipo: "pergunta", bg: "./quiz/BG4.png", texto: "Inversão de papéis", descricao: "Homem no papel de \"seu escravo\", obedecendo às suas ordens.", campo: "q20_inversaoPapeis", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG4" },
     { tipo: "pergunta", bg: "./quiz/BG4.png", texto: "Bondage", descricao: "Ser imobilizada ou imobilizar o outro com algemas, cordas, amarras, uso de chicotes, castigar ou ser castigada.", campo: "q21_bondage", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG4" },
@@ -64,8 +72,10 @@ const telas = [
     { tipo: "pergunta", bg: "./quiz/BG4.png", texto: "Humilhação erótica do parceiro", descricao: "Rebaixar, provocar, \"pisar\", xingar o parceiro, chamar de \"corno\", \"manso\" etc. em contexto sexual, com consenso, como parte do jogo de poder.", campo: "q24_humilhacaoParceiro", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG4" },
     { tipo: "pergunta", bg: "./quiz/BG4.png", texto: "Pegging", descricao: "Usar uma cinta no parceiro. Você troca de lugar com seu parceiro, fazendo dele seu submisso com uso de cintas/consolos, invertendo o jogo.", campo: "q26_pegging", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG4" },
     
-    // PORTAL 5 - A Caixa Preta da Deusa
+    // TELA 31 - Portal 5
     { tipo: "transicao", bg: "./quiz/BG05P05.png", botao: "Iniciar Portal 5", paleta: "BG05P05" },
+    
+    // TELAS 32-38 - Perguntas Portal 5 (parte 1) - BG5
     { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "\"Traição\" com consentimento", descricao: "Ficar com outra pessoa onde o parceiro sabe, autoriza e gosta.", campo: "q27_traicaoCons", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG5" },
     { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "Hotwife Clássica", descricao: "Você transa com outro homem enquanto seu parceiro assiste, podendo ou não ser humilhado verbalmente.", campo: "q28_cuckoldClassico", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG5" },
     { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "A Confidência Divina da HotWife", descricao: "Você sai com outro e quando volta conta todos os detalhes sórdidos para seu parceiro na cama, vendo ele delirar de tesão.", campo: "q29_hotwifeConf", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG5" },
@@ -74,14 +84,16 @@ const telas = [
     { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "O Trono da Cuckqueen", descricao: "Você assiste seu parceiro com outra mulher, mas é você quem controla a cena: escolhe quem entra, até onde vai e quando termina.", campo: "q32_cuckqueenTrono", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG5" },
     { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "Banquete Profano da Deusa", descricao: "Cenário em que homens e mulheres se entrelaçam livremente — todos com todos — em um festim profano sob a regência da Deusa.", campo: "q33_banqueteProfano", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG5" },
     
-    // Trindade Profana & Rito Dourado
-    { tipo: "transicao", bg: "./quiz/BGRDOURADOLIMPO.png", botao: "Continuar", paleta: "BGRDOURADOLIMPO" },
-    { tipo: "pergunta", bg: "./quiz/BGRDOURADO.png", texto: "Trindade Profana da Deusa", descricao: "Em um cenário com você, seu parceiro e outra mulher, qual dessas cenas mais te chama atenção?", campo: "q34_cenaTrindade", checkbox: ["Beijar e tocar a mulher enquanto o parceiro assiste","As duas com ele ao mesmo tempo","Você e ela se divertindo mais entre vocês do que com ele","Ele focado em te estimular enquanto você brinca com ela","Revezar: hora você com ele, hora ela com ele, hora só vocês duas"], paleta: "BGRDOURADO" },
-    { tipo: "pergunta", bg: "./quiz/BGRDOURADO.png", texto: "Numa situação a três com outra mulher, seu foco principal seria…?", campo: "q35_focoTrindade", checkbox: ["Não faria de forma alguma","Sentir tesão com ela, independente dele","Dividir o parceiro e curtir a energia dos três juntos","Deixar ele olhar enquanto você aproveita com ela","Ser o centro das atenções dos dois","Deixar a outra mulher ser o centro e observar tudo"], paleta: "BGRDOURADO" },
-    { tipo: "pergunta", bg: "./quiz/BGRDOURADO.png", texto: "E o ciúmes nessa história com outra mulher?", campo: "q36_ciumesTrindade", menu: ["Eu travaria, não consigo nem imaginar dividir ele","Teria ciúmes, mas acho que a excitação falaria mais alto","Se tiver regra clara, confiança e combinado, eu relaxo","Me excita justamente ver ele com outra na minha frente","Eu seria mais ciumenta com ela do que com ele"], paleta: "BGRDOURADO" },
-    { tipo: "pergunta", bg: "./quiz/BGRDOURADO.png", texto: "Golden Shower", descricao: "Prática em que o xixi se torna instrumento de prazer, dominação e humilhação erótica, sempre dentro de um acordo entre a Deusa e seu parceiro.", campo: "q37_goldenNivel", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BGRDOURADO" },
-    { tipo: "pergunta", bg: "./quiz/BGRDOURADO.png", texto: "Quando você pensa em golden shower, qual dessas vibes mais parece com você?", campo: "q38_goldenVibe", checkbox: ["Me dá mais nojo do que tesão","Sinto curiosidade, mas ainda sem saber se ia rolar na prática","Vejo como parte de humilhação erótica","Vejo como um ato de dominação/submissão bem intenso","Enxergo como uma forma extrema de intimidade e confiança","Me excita mais a ideia do que a prática em si"], paleta: "BGRDOURADO" },
-    { tipo: "pergunta", bg: "./quiz/BGRDOURADO.png", texto: "Rito Dourado da Deusa: qual papel mais combina com você?", campo: "q39_goldenPapel", checkbox: ["Fazer xixi no parceiro","Receber o xixi do parceiro","Alternar: às vezes dou, às vezes recebo","Só assistir a cena acontecendo, sem participar diretamente","Nenhuma dessas combina comigo (por enquanto)"], paleta: "BGRDOURADO" }
+    // TELA 39 - Transição Rito Dourado (subdivisão Portal 5)
+    { tipo: "transicao", bg: "./quiz/BGRDOURADO.png", botao: "Continuar para o Rito Dourado", paleta: "BGRDOURADO" },
+    
+    // TELAS 40-45 - Perguntas Rito Dourado - BG5
+    { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "Trindade Profana da Deusa", descricao: "Em um cenário com você, seu parceiro e outra mulher, qual dessas cenas mais te chama atenção?", campo: "q34_cenaTrindade", checkbox: ["Beijar e tocar a mulher enquanto o parceiro assiste","As duas com ele ao mesmo tempo","Você e ela se divertindo mais entre vocês do que com ele","Ele focado em te estimular enquanto você brinca com ela","Revezar: hora você com ele, hora ela com ele, hora só vocês duas"], paleta: "BG5" },
+    { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "Numa situação a três com outra mulher, seu foco principal seria…?", campo: "q35_focoTrindade", checkbox: ["Não faria de forma alguma","Sentir tesão com ela, independente dele","Dividir o parceiro e curtir a energia dos três juntos","Deixar ele olhar enquanto você aproveita com ela","Ser o centro das atenções dos dois","Deixar a outra mulher ser o centro e observar tudo"], paleta: "BG5" },
+    { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "E o ciúmes nessa história com outra mulher?", campo: "q36_ciumesTrindade", menu: ["Eu travaria, não consigo nem imaginar dividir ele","Teria ciúmes, mas acho que a excitação falaria mais alto","Se tiver regra clara, confiança e combinado, eu relaxo","Me excita justamente ver ele com outra na minha frente","Eu seria mais ciumenta com ela do que com ele"], paleta: "BG5" },
+    { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "Golden Shower", descricao: "Prática em que o xixi se torna instrumento de prazer, dominação e humilhação erótica, sempre dentro de um acordo entre a Deusa e seu parceiro.", campo: "q37_goldenNivel", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], paleta: "BG5" },
+    { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "Quando você pensa em golden shower, qual dessas vibes mais parece com você?", campo: "q38_goldenVibe", checkbox: ["Me dá mais nojo do que tesão","Sinto curiosidade, mas ainda sem saber se ia rolar na prática","Vejo como parte de humilhação erótica","Vejo como um ato de dominação/submissão bem intenso","Enxergo como uma forma extrema de intimidade e confiança","Me excita mais a ideia do que a prática em si"], paleta: "BG5" },
+    { tipo: "pergunta", bg: "./quiz/BG5.png", texto: "Rito Dourado da Deusa: qual papel mais combina com você?", campo: "q39_goldenPapel", checkbox: ["Fazer xixi no parceiro","Receber o xixi do parceiro","Alternar: às vezes dou, às vezes recebo","Só assistir a cena acontecendo, sem participar diretamente","Nenhuma dessas combina comigo (por enquanto)"], paleta: "BG5" }
 ];
 
 function preloadAllImages() {
@@ -134,7 +146,6 @@ function mostrarTela() {
     aplicarPaletaBotao(tela.paleta);
     
     if (tela.tipo === "transicao") {
-        // Tela de transição - apenas botão para avançar
         container.innerHTML = '';
         btnContainer.innerHTML = `<button type="button" id="btn-avancar">${tela.botao}</button>`;
         
@@ -144,31 +155,27 @@ function mostrarTela() {
         });
         
     } else if (tela.tipo === "pergunta") {
-        // Monta a pergunta com título e descrição
         let html = `<div id="question-box">
             <div class="question-title">${tela.texto}</div>
             ${tela.descricao ? `<div class="question-desc">${tela.descricao}</div>` : ''}
         </div><div id="options-box">`;
         
         if (tela.menu) {
-            // Menu suspenso - avança automaticamente
             html += '<select id="resposta" required><option value="">Selecione...</option>';
             tela.menu.forEach(o => html += `<option value="${o}">${o}</option>`);
             html += '</select>';
             html += '</div>';
             container.innerHTML = html;
-            btnContainer.innerHTML = ''; // SEM BOTÃO para menu
+            btnContainer.innerHTML = '';
             
-            // Auto-avanço ao selecionar
             document.getElementById('resposta').addEventListener('change', function() {
                 if (this.value) {
                     salvarRespostaMenu();
-                    setTimeout(() => avancarTela(), 300); // Pequeno delay para feedback visual
+                    setTimeout(() => avancarTela(), 300);
                 }
             });
             
         } else if (tela.checkbox) {
-            // Checkbox - precisa de botão
             tela.checkbox.forEach(o => html += `<label><input type="checkbox" name="check" value="${o}">${o}</label>`);
             html += '</div>';
             container.innerHTML = html;
@@ -184,14 +191,12 @@ function mostrarTela() {
     window.scrollTo(0, 0);
 }
 
-// Salva resposta de menu suspenso
 function salvarRespostaMenu() {
     const tela = telas[telaAtual];
     const sel = document.getElementById("resposta");
     
     if (sel && sel.value) {
         let resp = sel.value;
-        // Converte para número se for escala de experiência
         if (tela.menu[0] === "Nunca fiz e não tenho vontade") {
             resp = tela.menu.indexOf(sel.value) + 1;
         }
@@ -199,7 +204,6 @@ function salvarRespostaMenu() {
     }
 }
 
-// Função separada para avançar sem validação (transições)
 function avancarTela() {
     if (enviando) return;
     telaAtual++;
@@ -210,7 +214,6 @@ function avancarTela() {
     }
 }
 
-// Valida checkbox e avança
 function validarCheckboxEAvancar() {
     if (enviando) return;
     const tela = telas[telaAtual];
@@ -225,7 +228,6 @@ function validarCheckboxEAvancar() {
     avancarTela();
 }
 
-// Mantém compatibilidade
 function proximaTela() {
     const tela = telas[telaAtual];
     if (tela.tipo === "transicao") {
@@ -244,11 +246,62 @@ function calcularResultado() {
 
 function mostrarResultado(deusa) {
     const resultados = {
-        HESTIA: { titulo: "Héstia – Fogo Contido", texto: "Você é da linhagem de Héstia: a Deusa do fogo do lar.\n\nSua força mora no cuidado, na estabilidade, em manter tudo funcionando." },
-        ATENA: { titulo: "Atena – A Racional", texto: "Você é da linhagem de Atena: a Deusa Racional.\n\nBrilhante, analítica, rápida para entender tudo – menos quando o assunto é sentir." },
-        PERSEFONE: { titulo: "Perséfone – Entre Dois Mundos", texto: "Você é da linhagem de Perséfone: a Deusa que caminha entre dois mundos.\n\nEducada por fora, curiosa por dentro." },
-        AFRODITE: { titulo: "Afrodite – Em Despertar", texto: "Você é da linhagem de Afrodite: a Deusa em Despertar.\n\nSeu corpo fala. Seu desejo existe. Sua energia é magnética." },
-        LILITH: { titulo: "Lilith – Indomável", texto: "Você é da linhagem de Lilith: a Deusa Indomável.\n\nVocê não nasceu para viver pela régua dos outros." }
+        HESTIA: { 
+            titulo: "Héstia – A Deusa do Fogo Contido", 
+            texto: `Você é da linhagem de Héstia: a Deusa do fogo do lar.
+
+Sua força mora no cuidado, na estabilidade, em manter tudo funcionando. Você é aquela que segura a casa, o relacionamento, os BOs – muitas vezes sozinha.
+
+No meio de tanta responsabilidade, o seu desejo foi ficando em segundo, terceiro, último lugar. Você aprendeu a ser "a pessoa certa" antes de ser a mulher inteira.
+
+Seu prazer existe, mas vive cheio de condicionais: "se sobrar tempo", "se eu não estiver cansada", "se tudo estiver em ordem". Você sente falta de algo mais vivo, mais intenso, mas nem sempre sabe por onde começar.
+
+No Oráculo das Deusas, o seu movimento é lembrar que cuidar de tudo não significa se abandonar. Quando você volta pra si e acende o seu próprio fogo, o resto da vida começa a encaixar muito melhor.`
+        },
+        ATENA: { 
+            titulo: "Atena – A Deusa Racional", 
+            texto: `Você é da linhagem de Atena: a Deusa Racional.
+
+Você é brilhante, analítica, rápida pra entender tudo – menos quando o assunto é sentir. Seu maior superpoder é a mente, mas é justamente ela que muitas vezes levanta um muro entre você e o seu próprio prazer.
+
+Você gosta de ter controle, de saber o que vai acontecer, de não "se expor demais". Antes de se permitir, você pensa, avalia, pesa prós e contras… e muitas vezes desiste de viver algo que te faria bem só pra não correr riscos.
+
+Não é que você não tenha desejo. Você tem – mas ele passa primeiro por um interrogatório mental.
+
+No Oráculo das Deusas, o seu caminho é sair só da cabeça e começar a descer pro corpo, sem perder a inteligência – mas usando ela a seu favor, não contra você.`
+        },
+        PERSEFONE: { 
+            titulo: "Perséfone – A Deusa Entre Dois Mundos", 
+            texto: `Você é da linhagem de Perséfone: a Deusa que caminha entre dois mundos.
+
+Uma parte sua ainda é educada, "correta", discreta. A outra já flerta com fantasias, curiosidades e cenários que talvez você não tenha vivido, mas pensa em viver.
+
+Você é mais profunda do que deixa transparecer. Tem pensamentos, desejos e fantasias que raramente coloca em voz alta, porque sabe que muita gente não entenderia. Às vezes nem você mesma se entende totalmente.
+
+Seu universo interno é intenso, misterioso, cheio de encruzilhadas: ora quer segurança, ora quer o proibido. Ora quer controle, ora quer se perder de propósito.
+
+No Oráculo das Deusas, o seu trabalho não é escolher um lado e matar o outro, e sim integrar: explorar com consciência o que te chama, sem vergonha da sua profundidade, escolhendo com quem, como e até onde você quer ir.`
+        },
+        AFRODITE: { 
+            titulo: "Afrodite – A Deusa em Despertar", 
+            texto: `Você é da linhagem de Afrodite: a Deusa em Despertar.
+
+Seu corpo fala. Seu desejo existe. Sua energia é naturalmente magnética – mesmo quando você finge que não é. Você sente vontade de mais: mais prazer, mais presença, mais intensidade. Só que, junto com a vontade, às vezes vem a culpa, o julgamento interno, o medo do que vão pensar.
+
+Você já se permite em alguns momentos, mas ainda oscila: se solta e depois se pergunta se passou do ponto. Você está naquele lugar entre "eu quero" e "eu devo?".
+
+No Oráculo das Deusas, seu caminho é parar de pedir desculpa pelo que sente. Afrodite em você não precisa ser exagerada, vulgar ou performática – ela só precisa de espaço pra existir sem censura.`
+        },
+        LILITH: { 
+            titulo: "Lilith – A Deusa Indomável", 
+            texto: `Você é da linhagem de Lilith: a Deusa Indomável.
+
+Você não nasceu pra viver pela régua dos outros. Você sente intensamente, deseja profundamente e, no fundo, sabe que não foi feita pra viver uma vida morna. Quando você se permite, o seu prazer vem junto com uma sensação de poder, de presença, de "estou exatamente onde quero estar".
+
+Ao mesmo tempo, você já percebeu que nem todo mundo aguenta a sua verdade. Por isso, você aprendeu a selecionar: nem todo mundo merece acesso à sua versão mais crua, mais honesta, mais deliciosa de ser.
+
+No Oráculo das Deusas, seu caminho não é "se domar", e sim refinar sua força. Definir limites claros, escolher relações que estejam na sua altura e criar um espaço onde sua intensidade é bem-vinda – não um problema a ser consertado.`
+        }
     };
     
     const r = resultados[deusa];
@@ -258,7 +311,7 @@ function mostrarResultado(deusa) {
     
     aplicarPaletaBotao("BGRESULT");
     body.style.backgroundImage = `url('./quiz/BGRESULT.jpg')`;
-    container.innerHTML = `<h1>${r.titulo}</h1><p>${r.texto}</p>`;
+    container.innerHTML = `<div class="resultado-box"><h1>${r.titulo}</h1><p>${r.texto}</p></div>`;
     btnContainer.innerHTML = '';
     enviarParaPlanilha();
 }
@@ -278,7 +331,6 @@ async function enviarParaPlanilha() {
 }
 
 window.addEventListener('DOMContentLoaded', () => {
-    // Cria style dinâmico para o botão
     const styleEl = document.createElement('style');
     styleEl.id = 'dynamic-btn-style';
     document.head.appendChild(styleEl);
