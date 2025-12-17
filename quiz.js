@@ -5,70 +5,352 @@ let telaAtual = 0;
 let enviando = false;
 let pontuacaoTotal = 0;
 
+// Pontuação para perguntas de experiência (quanto maior, mais avançado)
 const pontuacaoRespostas = {
+    // Padrão experiência
     "Nunca fiz e não tenho vontade": 1,
     "Nunca fiz mas tenho curiosidade": 2,
     "Já fiz e não gostei": 2,
-    "Já fiz e repetiria com prazer": 4
+    "Já fiz e repetiria com prazer": 4,
+    
+    // Pergunta 16 - Fetiche GP
+    "Não me sinto confortável com encenações ou fetiches de exposição.": 1,
+    "A ideia de agir como uma profissional e seduzi-lo me desperta muita curiosidade.": 2,
+    "Tentamos o personagem, mas a cena pareceu forçada e não nos conectou.": 2,
+    "Encarnar essa fantasia e ser o objeto de desejo dele (ou de outros) é meu ápice.": 4,
+    
+    // Pergunta 18 - Femdom
+    "Prefiro ser conduzida ou manter a igualdade no sexo.": 1,
+    "A ideia de ter ele totalmente sob o meu controle me instiga.": 2,
+    "Tentei assumir o comando, mas achei a dinâmica cansativa.": 2,
+    "Eu nasci para dominar e amo ver a entrega total dele a mim.": 4,
+    
+    // Pergunta 19 - Humilhação
+    "Acho que quebraria o clima.": 1,
+    "A ideia de vê-lo como meu \"capacho\" me dá muito tesão": 2,
+    "Tentamos, mas nos sentimos ridículos e sem tesão.": 2,
+    "Pisar no orgulho dele é o meu combustível favorito.": 3,
+    "É o ápice da minha dominação e da entrega dele.": 4,
+    
+    // Pergunta 20 - Sado Moderado
+    "Fora de questão: refiro um sexo livre de acessórios e restrições.": 1,
+    "Instigante: sinto um frio na barriga com a ideia de ser dominada.": 2,
+    "Excitante: sinto um frio na barriga com a ideia em dominar": 2,
+    "Frustrante: a teoria foi muito melhor do que a prática real.": 2,
+    "Animalesco: nossa conexão atinge o ápice através desse jogo bruto.": 4,
+    
+    // Pergunta 21 - BDSM intenso
+    "Aterrorizante: a dor real aniquila qualquer desejo em mim.": 1,
+    "Obscuro: a ideia de testar meus limites físicos me fascina.": 2,
+    "Traumático: a experiência ultrapassou o prazer e foi negativa.": 1,
+    "Transcendental: a dor é o portal para o meu prazer mais profundo.": 4,
+    
+    // Pergunta 22 - Pegging
+    "Não tenho interesse em inverter os papéis tradicionais.": 1,
+    "Sinto muita sede de explorar esse lado ativo com ele.": 2,
+    "A logística e a sensação não foram o que eu esperava.": 2,
+    "Viciante, amamos a liberdade dessa troca de posições": 4,
+    
+    // Pergunta 24 - Exibicionismo
+    "Inviável: sinto vergonha ou invasão; minha intimidade é só para ele.": 1,
+    "Provocante: adoro ser desejada por outros, sabendo que ele sente orgulho e tesão nisso.": 3,
+    "Inseguro: já tentei me expor, mas o ciúme dele ou o meu desconforto estragaram o clima.": 2,
+    "Poder Absoluto: ser o \"troféu\" cobiçado e ver a excitação dele com o desejo alheio é meu ápice.": 4,
+    
+    // Pergunta 25 - Voyeurismo
+    "Prefiro o sexo tradicional, olho no olho e pele na pele.": 1,
+    "A ideia de ser observada por ele sem poder tocá-lo de imediato me excita.": 2,
+    "Tentamos esse jogo de distância, mas a conexão esfriou em vez de esquentar.": 2,
+    "O jogo de ser a \"presa\" sob o olhar atento dele é o que mais nos incendeia.": 4,
+    
+    // Pergunta 26 - Desconhecido
+    "Inconcebível: a falta de vínculo me trava totalmente.": 1,
+    "Instigante: o mistério de um estranho me fascina.": 2,
+    "Vazio: tentei, mas a falta de conexão esfriou tudo.": 2,
+    "Libertador: o anonimato é o que mais me incendeia.": 4,
+    
+    // Pergunta 27 - Menage Masc
+    "Fora de questão: meu desejo exige exclusividade total entre nós dois.": 1,
+    "Pura adrenalina: ser o centro das atenções de dois homens seria o meu ápice.": 3,
+    "Página virada: a experiência de dividir meu corpo com dois trouxe desconforto.": 2,
+    "Nosso combustível: nada nos incendeia mais do que ele me vendo ser possuída por outro.": 4,
+    
+    // Pergunta 29 - Menage Fem
+    "Fora de questão: meu desejo exige exclusividade total dele.": 1,
+    "Pura adrenalina: ver ele obedecer meus comandos com outra seria um ápice.": 3,
+    "Página virada: ver a cena ao vivo trouxe sentimentos que preferi evitar.": 2,
+    "Nada me dá mais poder do que orquestrar o prazer dele.": 4,
+    
+    // Pergunta 32 - Swing
+    "Jamais: a ideia de ver meu homem com outra mulher me repele.": 1,
+    "Tentador: um convite desses me deixaria muito balançada.": 2,
+    "Frustrante: a experiência real ficou longe do que imaginei.": 2,
+    "Essencial: adoramos o ambiente e a adrenalina da troca.": 4,
+    
+    // Pergunta 33 - Grupal
+    "Fora de cogitação: abomino a ideia de sexo em grupo.": 1,
+    "Tentador: a adrenalina da bagunça organizada me atrai.": 2,
+    "Decepcionante: na prática, não foi tão prazeroso quanto na fantasia.": 2,
+    "Nosso ápice: adoramos a liberdade sem regras das festas tradicionais.": 4,
+    
+    // Pergunta 34 - Hotwife ideia
+    "Meu desejo é alimentado exclusivamente pela nossa exclusividade.": 1,
+    "O aval dele é o gatilho que faltava para minha ousadia.": 2,
+    "Já me imaginei algumas vezes vivendo isso.": 3,
+    "Ser uma Hotwife com a aprovação dele seria meu ápice.": 4,
+    
+    // Pergunta 35 - Confissão
+    "Acho que não": 1,
+    "Seria o verdadeiro Grand Finale": 3,
+    "Já tentamos e não fluiu": 2,
+    "Faz parte de nosso ritual secreto": 4,
+    
+    // Pergunta 36 - Ele assistindo
+    "Não curtiria": 1,
+    "Prefiro manter nossa privacidade visual.": 1,
+    "Um sonho ousado: ver o rosto dele enquanto me perco com outro seria único.": 3,
+    "Página virada: a experiência visual ao vivo trouxe mais peso do que prazer.": 2,
+    "É o nosso ápice: ele é o meu espectador favorito no meu momento mais sórdido.": 4
 };
 
 const telas = [
     // TELA 0 - Boas-vindas
     { tipo: "boasvindas" },
     
-    // PORTAL 1 - Perfil básico
+    // 1. Signo
     { tipo: "pergunta", texto: "Qual é o seu signo?", campo: "q1_signo", menu: ["Áries","Touro","Gêmeos","Câncer","Leão","Virgem","Libra","Escorpião","Sagitário","Capricórnio","Aquário","Peixes"] },
+    
+    // 2. Faixa etária
     { tipo: "pergunta", texto: "Qual sua faixa etária?", campo: "q2_idade", menu: ["18-24","25-34","35-44","45-54","55-64","65+"] },
-    { tipo: "pergunta", texto: "Qual é a sua orientação sexual?", campo: "q3_orientacao", menu: ["Heterossexual","Bissexual","Homossexual","Pansexual"] },
-    { tipo: "pergunta", texto: "Qual seu status de relacionamento?", campo: "q4_status", menu: ["Solteira","Namorando","Noiva","Casada","União Estável","Relacionamento Aberto","Divorciada","Viúva","É complicado"] },
-    { tipo: "pergunta", texto: "E o seu 'currículo amoroso'?", descricao: "Quantos parceiros sexuais você já teve na vida?", campo: "q5_curriculo", menu: ["0-1","2-5","6-10","11-20","21-30","31-50","51+"] },
     
-    // PORTAL 2 - Prazer
-    { tipo: "pergunta", texto: "Quem prefere que tome a iniciativa na hora H?", campo: "q6_iniciativa", menu: ["Eu","Ele(s)","Depende do momento"] },
-    { tipo: "pergunta", texto: "O que mais faz seu corpo entrar no clima?", campo: "q7_clima", checkbox: ["Beijos quentes","Carícias no corpo","Toque íntimo","Conversas picantes"] },
-    { tipo: "pergunta", texto: "Posição preferida?", campo: "q8_posicoes", checkbox: ["Cavalgando","Papai & Mamãe","De quatro","Em pé","69","De ladinho"] },
-    { tipo: "pergunta", texto: "Quantos orgasmos você tem na semana?", campo: "q9_orgasmos", menu: ["Nenhum","1","2–3","4–6","Mais de 6"] },
-    { tipo: "pergunta", texto: "O tamanho importa? Qual a preferência da Deusa?", campo: "q10_tamanho", checkbox: ["12 a 15cm","15 a 18cm","19 a 21cm","22cm ou mais"] },
-    { tipo: "pergunta", texto: "O que normalmente te leva ao auge do prazer?", campo: "q11_auge", checkbox: ["Sexo oral","Penetração","Estimulação externa com dedos","Brinquedinhos","Estimulação anal","Vários ao mesmo tempo"] },
+    // 3. Orientação sexual
+    { tipo: "pergunta", texto: "Qual é a sua orientação sexual?", campo: "q3_orientacao", menu: ["Heterossexual","Bissexual","Homossexual","Liberal"] },
     
-    // PORTAL 3 - Fantasias
-    { tipo: "pergunta", texto: "Quando a imaginação bate sozinha, a que você recorre?", campo: "q12_sozinha", checkbox: ["Contos eróticos","Vídeo pornô","Vibrador","Brinquedos variados","Banho estratégico"] },
-    { tipo: "pergunta", texto: "Já experimentou pessoas do mesmo sexo na cama?", campo: "q13_mesmoSexo", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], pontuavel: true },
-    { tipo: "pergunta", texto: "Já teve experiências a três (2 homens e você)?", campo: "q13b_tres2Homens", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], pontuavel: true },
-    { tipo: "pergunta", texto: "Experiências a três (você, uma amiga e um parceiro)?", campo: "q14_tresAmigaParceiro", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], pontuavel: true },
-    { tipo: "pergunta", texto: "Experiências com pessoas trans?", campo: "q15_trans", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], pontuavel: true },
-    { tipo: "pergunta", texto: "Sexo com total desconhecido(a)?", campo: "q16_desconhecido", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], pontuavel: true },
-    { tipo: "pergunta", texto: "Troca de casais / Swing?", descricao: "Foi convidada pelo parceiro para troca de casais.", campo: "q17_swing", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], pontuavel: true },
-    { tipo: "pergunta", texto: "Suruba (mais de 3 pessoas)?", descricao: "Foi convidada para uma suruba com mais de 3 pessoas envolvidas.", campo: "q18_orgia", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], pontuavel: true },
+    // 4. Status relacionamento
+    { tipo: "pergunta", texto: "Você está:", campo: "q4_status", menu: ["Solteira","Namorando","Noiva","Casada","União Estável","Relacionamento Aberto","Divorciada","Viúva","É complicado"] },
     
-    // PORTAL 4 - Dominação
-    { tipo: "pergunta", texto: "O que você prefere, no geral?", campo: "q19_prefereDom", menu: ["Ser dominada","Dominar"] },
-    { tipo: "pergunta", texto: "Inversão de papéis", descricao: "Homem no papel de \"seu escravo\", obedecendo às suas ordens.", campo: "q20_inversaoPapeis", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], pontuavel: true },
-    { tipo: "pergunta", texto: "Bondage", descricao: "Ser imobilizada ou imobilizar o outro com algemas, cordas, amarras, uso de chicotes, castigar ou ser castigada.", campo: "q21_bondage", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], pontuavel: true },
-    { tipo: "pergunta", texto: "Sado Moderado", descricao: "Tapas, puxões, apertos, prendedores, estímulos de dor controlada.", campo: "q22_sadoModerado", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], pontuavel: true },
-    { tipo: "pergunta", texto: "Sado Intenso", descricao: "Situações em que a dor intensa com uso de acessórios é parte central da cena.", campo: "q23_sadoHard", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], pontuavel: true },
-    { tipo: "pergunta", texto: "Humilhação erótica do parceiro", descricao: "Rebaixar, provocar, \"pisar\", xingar o parceiro, chamar de \"corno\", \"manso\" etc. em contexto sexual, com consenso, como parte do jogo de poder.", campo: "q24_humilhacaoParceiro", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], pontuavel: true },
-    { tipo: "pergunta", texto: "Pegging", descricao: "Usar uma cinta no parceiro. Você troca de lugar com seu parceiro, fazendo dele seu submisso com uso de cintas/consolos, invertendo o jogo.", campo: "q26_pegging", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], pontuavel: true },
+    // 5. Parceiros sexuais
+    { tipo: "pergunta", texto: "Quantos parceiros sexuais você já teve?", campo: "q5_parceiros", menu: ["0-1","2-5","6-10","11-20","21-30","31-50","51+"] },
     
-    // PORTAL 5 - Caixa preta
-    { tipo: "pergunta", texto: "\"Traição\" com consentimento", descricao: "Ficar com outra pessoa onde o parceiro sabe, autoriza e gosta.", campo: "q27_traicaoCons", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], pontuavel: true },
-    { tipo: "pergunta", texto: "Hotwife Clássica", descricao: "Você transa com outro homem enquanto seu parceiro assiste, podendo ou não ser humilhado verbalmente.", campo: "q28_cuckoldClassico", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], pontuavel: true },
-    { tipo: "pergunta", texto: "A Confidência Divina da HotWife", descricao: "Você sai com outro e quando volta conta todos os detalhes sórdidos para seu parceiro na cama, vendo ele delirar de tesão.", campo: "q29_hotwifeConf", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], pontuavel: true },
-    { tipo: "pergunta", texto: "A Adoração Sagrada da Hotwife", descricao: "Você transa com outro na frente do seu parceiro. Ele assiste ao vivo mas não interage, só pode assistir enquanto você o encara nos olhos.", campo: "q30_hotwifeAdoracao", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], pontuavel: true },
-    { tipo: "pergunta", texto: "A Hotwife Soberana", descricao: "Você transando com outro homem e ordenando seu parceiro a interagir com ele, enquanto é humilhado como parte da cena consensual.", campo: "q31_hotwifeSoberana", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], pontuavel: true },
-    { tipo: "pergunta", texto: "O Trono da Cuckqueen", descricao: "Você assiste seu parceiro com outra mulher, mas é você quem controla a cena: escolhe quem entra, até onde vai e quando termina.", campo: "q32_cuckqueenTrono", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], pontuavel: true },
-    { tipo: "pergunta", texto: "Banquete Profano da Deusa", descricao: "Cenário em que homens e mulheres se entrelaçam livremente — todos com todos — em um festim profano sob a regência da Deusa.", campo: "q33_banqueteProfano", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], pontuavel: true },
+    // 6. Iniciativa
+    { tipo: "pergunta", texto: "Quem prefere que tome a iniciativa na hora H?", campo: "q6_iniciativa", menu: ["Eu","Outra pessoa","Depende do momento"] },
     
-    // Rito Dourado
-    { tipo: "pergunta", texto: "Trindade Profana da Deusa", descricao: "Em um cenário com você, seu parceiro e outra mulher, qual dessas cenas mais te chama atenção?", campo: "q34_cenaTrindade", checkbox: ["Beijar e tocar a mulher enquanto o parceiro assiste","As duas com ele ao mesmo tempo","Você e ela se divertindo mais entre vocês do que com ele","Ele focado em te estimular enquanto você brinca com ela","Revezar: hora você com ele, hora ela com ele, hora só vocês duas"] },
-    { tipo: "pergunta", texto: "Numa situação a três com outra mulher, seu foco principal seria…?", campo: "q35_focoTrindade", checkbox: ["Não faria de forma alguma","Sentir tesão com ela, independente dele","Dividir o parceiro e curtir a energia dos três juntos","Deixar ele olhar enquanto você aproveita com ela","Ser o centro das atenções dos dois","Deixar a outra mulher ser o centro e observar tudo"] },
-    { tipo: "pergunta", texto: "E o ciúmes nessa história com outra mulher?", campo: "q36_ciumesTrindade", menu: ["Eu travaria, não consigo nem imaginar dividir ele","Teria ciúmes, mas acho que a excitação falaria mais alto","Se tiver regra clara, confiança e combinado, eu relaxo","Me excita justamente ver ele com outra na minha frente","Eu seria mais ciumenta com ela do que com ele"] },
-    { tipo: "pergunta", texto: "Golden Shower", descricao: "Prática em que o xixi se torna instrumento de prazer, dominação e humilhação erótica, sempre dentro de um acordo entre a Deusa e seu parceiro.", campo: "q37_goldenNivel", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], pontuavel: true },
-    { tipo: "pergunta", texto: "Quando você pensa em golden shower, qual dessas vibes mais parece com você?", campo: "q38_goldenVibe", checkbox: ["Me dá mais nojo do que tesão","Sinto curiosidade, mas ainda sem saber se ia rolar na prática","Vejo como parte de humilhação erótica","Vejo como um ato de dominação/submissão bem intenso","Enxergo como uma forma extrema de intimidade e confiança","Me excita mais a ideia do que a prática em si"] },
-    { tipo: "pergunta", texto: "Rito Dourado da Deusa: qual papel mais combina com você?", campo: "q39_goldenPapel", checkbox: ["Fazer xixi no parceiro","Receber o xixi do parceiro","Alternar: às vezes dou, às vezes recebo","Só assistir a cena acontecendo, sem participar diretamente","Nenhuma dessas combina comigo (por enquanto)"] }
+    // 7. Gatilho principal
+    { tipo: "pergunta", texto: "Seu gatilho principal é:", campo: "q7_gatilho", checkbox: [
+        "Sensorial: (Toque, temperatura, cheiro)",
+        "Visual: (Estética, roupas, espelhos)",
+        "Verbal: (Dirty talk, gemidos, histórias)",
+        "Psicológico: (Poder, submissão, tabu)"
+    ]},
+    
+    // 8. Posição preferida
+    { tipo: "pergunta", texto: "Posição preferida?", campo: "q8_posicao", checkbox: ["Cavalgada","Cavalgada de costas","Papai Mamãe","De quatro","De pé","69","De lado"] },
+    
+    // 9. Tamanho ideal
+    { tipo: "pergunta", texto: "Qual o tamanho ideal para você?", campo: "q9_tamanho", checkbox: ["12 a 15cm","15 a 18cm","19 a 21cm","22cm ou mais"] },
+    
+    // 10. Orgasmos na semana
+    { tipo: "pergunta", texto: "Quantos orgasmos você tem na semana?", campo: "q10_orgasmos", menu: ["Nenhum","1","2–3","4–6","6-8","+9"] },
+    
+    // 11. Gatilho para orgasmo
+    { tipo: "pergunta", texto: "Qual o seu gatilho principal para o orgasmo?", campo: "q11_gatilhoOrgasmo", checkbox: ["Estímulo oral","Estimulação clitóris","Estimulação anal","Penetração","Brinquedos","Vários ao mesmo tempo"] },
+    
+    // 12. Imaginação sozinha
+    { tipo: "pergunta", texto: "Quando a imaginação bate sozinha, a que você recorre?", campo: "q12_sozinha", checkbox: ["Contos eróticos","Vídeo pornô","Vibrador","Brinquedos variados","Banho frio"] },
+    
+    // 13. Experiências mesmo sexo
+    { tipo: "pergunta", texto: "Experiências com pessoas do mesmo sexo?", campo: "q13_mesmoSexo", checkbox: ["Apenas com homens","Sinto uma ponta de curiosidade","Já fiquei, mas prefiro homens","Gosto e me envolvo com as duas"] },
+    
+    // 14. Experiências trans
+    { tipo: "pergunta", texto: "Experiências com pessoas trans?", campo: "q14_trans", menu: ["Nunca fiz e não tenho vontade","Nunca fiz mas tenho curiosidade","Já fiz e não gostei","Já fiz e repetiria com prazer"], pontuavel: true },
+    
+    // 15. Roleplay
+    { tipo: "pergunta", texto: "Sobre o Jogo de Personagens (Roleplay):", descricao: "Interpretar papéis em um jogo de sedução", campo: "q15_roleplay", checkbox: [
+        "A \"Profissional\": Garota de programa e cliente (foco em sedução e poder)",
+        "A \"Autoridade\": Professora e aluno ou Chefe e funcionário (foco em hierarquia)",
+        "O \"Cuidado\": Enfermeira/Médico e paciente (foco em vulnerabilidade)",
+        "Os \"Estranhos\": Duas pessoas que se conhecem em um bar (foco no mistério)"
+    ]},
+    
+    // 16. Fetiche garota programa
+    { tipo: "pergunta", texto: "Sobre encenar fetiches como ser uma \"garota de programa\" sendo observada ou contratada por ele:", campo: "q16_fetiche", menu: [
+        "Não me sinto confortável com encenações ou fetiches de exposição.",
+        "A ideia de agir como uma profissional e seduzi-lo me desperta muita curiosidade.",
+        "Tentamos o personagem, mas a cena pareceu forçada e não nos conectou.",
+        "Encarnar essa fantasia e ser o objeto de desejo dele (ou de outros) é meu ápice."
+    ], pontuavel: true },
+    
+    // 17. Posicionamento no prazer
+    { tipo: "pergunta", texto: "No jogo do prazer, como você se posiciona?", campo: "q17_posicionamento", menu: [
+        "Totalmente Passiva: (Prefiro ser guiada e me entregar)",
+        "Totalmente Ativa: (Gosto de ter o controle e ditar o ritmo)",
+        "Versátil (Switch): (Gosto de alternar entre mandar e obedecer)",
+        "Protagonista: (Gosto de ser o centro das atenções/exibida)",
+        "Espectadora: (Meu maior tesão é observar a cena acontecer)"
+    ]},
+    
+    // 18. Femdom
+    { tipo: "pergunta", texto: "Prática de Femdom (Dominação Feminina):", campo: "q18_femdom", menu: [
+        "Prefiro ser conduzida ou manter a igualdade no sexo.",
+        "A ideia de ter ele totalmente sob o meu controle me instiga.",
+        "Tentei assumir o comando, mas achei a dinâmica cansativa.",
+        "Eu nasci para dominar e amo ver a entrega total dele a mim."
+    ], pontuavel: true },
+    
+    // 19. Humilhação erótica
+    { tipo: "pergunta", texto: "Humilhação erótica do parceiro:", descricao: "Humilhar, provocar, maltratar, pisar, xingar o parceiro, chamando de \"escravo\", \"corninho\", \"manso\", \"capacho\", como parte do jogo de poder.", campo: "q19_humilhacao", menu: [
+        "Acho que quebraria o clima.",
+        "A ideia de vê-lo como meu \"capacho\" me dá muito tesão",
+        "Tentamos, mas nos sentimos ridículos e sem tesão.",
+        "Pisar no orgulho dele é o meu combustível favorito.",
+        "É o ápice da minha dominação e da entrega dele."
+    ], pontuavel: true },
+    
+    // 20. Sado Moderado
+    { tipo: "pergunta", texto: "Prática de Sadomasoquismo Moderado", descricao: "Ser imobilizada ou imobilizar o outro com algemas, cordas, amarras, uso de chicotes, castigar ou ser castigada.", campo: "q20_sadoModerado", menu: [
+        "Fora de questão: refiro um sexo livre de acessórios e restrições.",
+        "Instigante: sinto um frio na barriga com a ideia de ser dominada.",
+        "Excitante: sinto um frio na barriga com a ideia em dominar",
+        "Frustrante: a teoria foi muito melhor do que a prática real.",
+        "Animalesco: nossa conexão atinge o ápice através desse jogo bruto."
+    ], pontuavel: true },
+    
+    // 21. BDSM intenso
+    { tipo: "pergunta", texto: "Práticas de Sadomasoquismo (BDSM de alta intensidade):", campo: "q21_bdsmIntenso", menu: [
+        "Aterrorizante: a dor real aniquila qualquer desejo em mim.",
+        "Obscuro: a ideia de testar meus limites físicos me fascina.",
+        "Traumático: a experiência ultrapassou o prazer e foi negativa.",
+        "Transcendental: a dor é o portal para o meu prazer mais profundo."
+    ], pontuavel: true },
+    
+    // 22. Pegging
+    { tipo: "pergunta", texto: "Prática de Pegging:", descricao: "Penetração com uso de acessórios no parceiro.", campo: "q22_pegging", menu: [
+        "Não tenho interesse em inverter os papéis tradicionais.",
+        "Sinto muita sede de explorar esse lado ativo com ele.",
+        "A logística e a sensação não foram o que eu esperava.",
+        "Viciante, amamos a liberdade dessa troca de posições"
+    ], pontuavel: true },
+    
+    // 23. Chuva dourada
+    { tipo: "pergunta", texto: "Rompendo os tabus modernos, a \"chuva dourada\" para você seria:", campo: "q23_golden", checkbox: [
+        "Me dá mais nojo do que tesão",
+        "Sinto curiosidade, mas ainda sem saber se ia rolar na prática",
+        "Vejo como parte de humilhação erótica",
+        "Vejo como um ato de dominação/submissão bem intenso",
+        "Enxergo como uma forma extrema de intimidade e confiança",
+        "Me excita mais a ideia do que a prática em si"
+    ]},
+    
+    // 24. Exibicionismo
+    { tipo: "pergunta", texto: "Exibicionismo e o \"Olhar do Outro\":", descricao: "Sobre o prazer de ser observada por estranhos em público (com um traje provocante) enquanto seu parceiro assiste à reação das pessoas.", campo: "q24_exibicionismo", menu: [
+        "Inviável: sinto vergonha ou invasão; minha intimidade é só para ele.",
+        "Provocante: adoro ser desejada por outros, sabendo que ele sente orgulho e tesão nisso.",
+        "Inseguro: já tentei me expor, mas o ciúme dele ou o meu desconforto estragaram o clima.",
+        "Poder Absoluto: ser o \"troféu\" cobiçado e ver a excitação dele com o desejo alheio é meu ápice."
+    ], pontuavel: true },
+    
+    // 25. Voyeurismo
+    { tipo: "pergunta", texto: "Voyeurismo e Distância (O Jogo do Observador):", descricao: "Sobre o fetiche de ser vigiada por ele à distância, ou ele ver você em situações de \"risco planejado\" (como sair sozinha ou ser abordada).", campo: "q25_voyeurismo", menu: [
+        "Prefiro o sexo tradicional, olho no olho e pele na pele.",
+        "A ideia de ser observada por ele sem poder tocá-lo de imediato me excita.",
+        "Tentamos esse jogo de distância, mas a conexão esfriou em vez de esquentar.",
+        "O jogo de ser a \"presa\" sob o olhar atento dele é o que mais nos incendeia."
+    ], pontuavel: true },
+    
+    // 26. Sexo com desconhecido
+    { tipo: "pergunta", texto: "Sexo com total desconhecido(a)?", campo: "q26_desconhecido", menu: [
+        "Inconcebível: a falta de vínculo me trava totalmente.",
+        "Instigante: o mistério de um estranho me fascina.",
+        "Vazio: tentei, mas a falta de conexão esfriou tudo.",
+        "Libertador: o anonimato é o que mais me incendeia."
+    ], pontuavel: true },
+    
+    // 27. Menage Masculino
+    { tipo: "pergunta", texto: "Toparia um Menage Masculino (2H x 1M)?", campo: "q27_menageMasc", menu: [
+        "Fora de questão: meu desejo exige exclusividade total entre nós dois.",
+        "Pura adrenalina: ser o centro das atenções de dois homens seria o meu ápice.",
+        "Página virada: a experiência de dividir meu corpo com dois trouxe desconforto.",
+        "Nosso combustível: nada nos incendeia mais do que ele me vendo ser possuída por outro."
+    ], pontuavel: true },
+    
+    // 28. Cenário Menage Masculino
+    { tipo: "pergunta", texto: "No cenário do Menage Masculino, qual dessas cenas mais te chama atenção?", campo: "q28_cenaMenageMasc", menu: [
+        "Eles focados em você: os dois disputando cada centímetro do seu corpo.",
+        "O parceiro no comando: ele ditando como o outro homem deve te dar prazer.",
+        "Interação total: você entre os dois, explorando ambos ao mesmo tempo.",
+        "Foco no parceiro: você e o convidado focados em dar prazer ao seu homem.",
+        "Submissão e entrega: você totalmente entregue aos desejos e ritmos dos dois."
+    ]},
+    
+    // 29. Menage Feminino
+    { tipo: "pergunta", texto: "Toparia um Menage Feminino (2M x 1H)?", campo: "q29_menageFem", menu: [
+        "Fora de questão: meu desejo exige exclusividade total dele.",
+        "Pura adrenalina: ver ele obedecer meus comandos com outra seria um ápice.",
+        "Página virada: ver a cena ao vivo trouxe sentimentos que preferi evitar.",
+        "Nada me dá mais poder do que orquestrar o prazer dele."
+    ], pontuavel: true },
+    
+    // 30. Cenário Menage Feminino
+    { tipo: "pergunta", texto: "No cenário do Menage Feminino, qual dessas cenas mais te chama atenção?", campo: "q30_cenaMenageFem", checkbox: [
+        "Beijar e tocar a mulher enquanto o parceiro assiste",
+        "As duas com ele ao mesmo tempo",
+        "Você e ela se divertindo mais entre vocês do que com ele",
+        "Ele focado em te estimular enquanto você brinca com ela",
+        "Revezar: hora você com ele, hora ela com ele, hora só vocês duas"
+    ]},
+    
+    // 31. Ciúmes
+    { tipo: "pergunta", texto: "E o ciúmes nessa história com outra mulher?", campo: "q31_ciumes", menu: [
+        "Eu travaria, não consigo nem imaginar dividir ele",
+        "Teria ciúmes, mas acho que a excitação falaria mais alto",
+        "Se tiver regra clara, confiança e combinado, eu relaxo",
+        "Me excita justamente ver ele com outra na minha frente",
+        "Eu seria mais ciumenta com ela do que com ele"
+    ]},
+    
+    // 32. Swing
+    { tipo: "pergunta", texto: "Se convidada, como você reage à ideia de Swing?", campo: "q32_swing", menu: [
+        "Jamais: a ideia de ver meu homem com outra mulher me repele.",
+        "Tentador: um convite desses me deixaria muito balançada.",
+        "Frustrante: a experiência real ficou longe do que imaginei.",
+        "Essencial: adoramos o ambiente e a adrenalina da troca."
+    ], pontuavel: true },
+    
+    // 33. Sexo grupal
+    { tipo: "pergunta", texto: "Experiência com sexo grupal (+4 pessoas)?", campo: "q33_grupal", menu: [
+        "Fora de cogitação: abomino a ideia de sexo em grupo.",
+        "Tentador: a adrenalina da bagunça organizada me atrai.",
+        "Decepcionante: na prática, não foi tão prazeroso quanto na fantasia.",
+        "Nosso ápice: adoramos a liberdade sem regras das festas tradicionais."
+    ], pontuavel: true },
+    
+    // 34. Hotwife imaginação
+    { tipo: "pergunta", texto: "Já se imaginou ficando com outro, sabendo que ele aprova?", campo: "q34_hotwifeIdeia", menu: [
+        "Meu desejo é alimentado exclusivamente pela nossa exclusividade.",
+        "O aval dele é o gatilho que faltava para minha ousadia.",
+        "Já me imaginei algumas vezes vivendo isso.",
+        "Ser uma Hotwife com a aprovação dele seria meu ápice."
+    ], pontuavel: true },
+    
+    // 35. Confissão pós-aventura
+    { tipo: "pergunta", texto: "E se, após essa aventura, o seu retorno para casa fosse marcado por uma confissão de cada detalhe sórdido para ele para tirar o fôlego de tesão?", campo: "q35_confissao", menu: [
+        "Acho que não",
+        "Seria o verdadeiro Grand Finale",
+        "Já tentamos e não fluiu",
+        "Faz parte de nosso ritual secreto"
+    ], pontuavel: true },
+    
+    // 36. Ele assistindo
+    { tipo: "pergunta", texto: "E agora, se além dele só ficar sabendo, ele visse você perder totalmente o controle e se entregar ao outro com uma intensidade que ele nunca viu?", campo: "q36_eleAssistindo", menu: [
+        "Não curtiria",
+        "Prefiro manter nossa privacidade visual.",
+        "Um sonho ousado: ver o rosto dele enquanto me perco com outro seria único.",
+        "Página virada: a experiência visual ao vivo trouxe mais peso do que prazer.",
+        "É o nosso ápice: ele é o meu espectador favorito no meu momento mais sórdido."
+    ], pontuavel: true }
 ];
 
-// RESULTADOS COMPLETOS - SEM PARCEIROS
+// RESULTADOS COMPLETOS
 const resultados = {
     1: {
         titulo: "O Iniciante",
@@ -234,9 +516,10 @@ function mostrarTela() {
         container.innerHTML = `
             <div class="tela-inicial fade-in">
                 <div class="badge-18">+18</div>
-                <h1>Teste de Nível<br>de Sexualidade</h1>
+                <h1>Guia de<br>Sexualidade</h1>
                 <p class="subtitulo">Teste o nível do seu presente.<br>Projete o nível do seu futuro.</p>
-                <p class="aviso">Este conteúdo é exclusivo para maiores de 18 anos e contém perguntas sobre intimidade, fantasias e práticas sexuais.</p>
+                <p class="descricao">Este guia irá te auxiliar a explorar suas preferências, da rotina ao fetiche. No final, você recebe um nível (1–5) e sugestões que facilitam suas escolhas no nosso catálogo, para encontrar acessórios que combinam com o seu perfil e elevam sua experiência.</p>
+                <p class="aviso">Conteúdo exclusivo para maiores de 18 anos.</p>
             </div>
         `;
         btnContainer.innerHTML = `<button type="button" id="btn-iniciar">Tenho 18 anos ou mais</button>`;
