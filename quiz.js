@@ -526,14 +526,6 @@ function mostrarTela() {
             btnContainer.innerHTML = '<button type="button" id="btn-proxima">Continuar</button>';
             
             setTimeout(() => {
-                // Auto-avançar ao selecionar radio
-                document.querySelectorAll('input[name="radio"]').forEach(radio => {
-                    radio.onchange = function() {
-                        salvarResposta(tela, this.value);
-                        setTimeout(() => avancarTela(), 300);
-                    };
-                });
-                
                 document.getElementById('btn-proxima').onclick = () => {
                     const selected = document.querySelector('input[name="radio"]:checked');
                     if (!selected) {
